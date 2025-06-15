@@ -1,0 +1,24 @@
+.authenticate-container
+  .auth-title ユーザ認証機能
+
+  .authenticate-card
+    %h2.card-title Sign in
+
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .field-group
+        = f.label :email, class: 'input-label'
+        = f.email_field :email, autofocus: true, autocomplete: "email", class: 'input-box'
+
+      .field-group
+        = f.label :password, class: 'input-label'
+        = f.password_field :password, autocomplete: "current-password", class: 'input-box'
+
+      - if devise_mapping.rememberable?
+        .field-group
+          = f.check_box :remember_me
+          = f.label :remember_me, class: 'input-label'
+
+      .actions
+        = f.submit "Submit", class: 'submit-button'
+
+    = render "devise/shared/links"
