@@ -83,6 +83,10 @@ GEM
     bcrypt_pbkdf (1.1.1-arm64-darwin)
     bcrypt_pbkdf (1.1.1-x86_64-darwin)
     benchmark (0.4.1)
+    better_errors (2.10.1)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
+      rouge (>= 1.0.0)
     bigdecimal (3.2.2)
     bindex (0.8.1)
     binding_of_caller (1.0.1)
@@ -293,6 +297,7 @@ GEM
     reline (0.6.1)
       io-console (~> 0.5)
     rexml (3.4.1)
+    rouge (4.5.2)
     rubocop (1.76.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -407,6 +412,8 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  better_errors
+  binding_of_caller
   bootsnap
   brakeman
   capybara
