@@ -1,5 +1,6 @@
 .auth-title {
-  width: 868px;
+  max-width: 960px;
+  width: 100%;
   height: 133px;
   background-color: #f25c5c;
   color: white;
@@ -10,22 +11,51 @@
   margin: 0 auto 40px;
 }
 
-.authenticate-container {
+.authenticate-page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 40px;
+
+  .cards-container {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    max-width: 960px;
+    min-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+  }
 }
 
 .authenticate-card {
   width: 420px;
+  min-height: 550px;
   padding: 20px 30px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h3 {
+    font-size: 14px;
+    color: gray;
+    margin-bottom: 4px;
+  }
+
   .card-title {
     font-size: 20px;
     margin-bottom: 20px;
+  }
+
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 
   .field-group {
@@ -38,7 +68,7 @@
     }
 
     .input-box {
-      width: 362px;
+      width: 100%;
       height: 40px;
       padding: 5px 10px;
       border: 1px solid #ccc;
@@ -47,8 +77,9 @@
   }
 
   .submit-button {
-    width: 362px;
+    width: 100%;
     height: 40px;
+    margin-top: 20px;
     background-color: #ffcc00;
     border: none;
     color: #000;
@@ -59,5 +90,12 @@
     &:hover {
       background-color: #e6b800;
     }
+  }
+}
+
+@media (max-width: 899px) {
+  .authenticate-page .cards-container {
+    flex-direction: column;
+    align-items: center;
   }
 }

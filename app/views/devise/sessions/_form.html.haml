@@ -1,0 +1,11 @@
+= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "form-wrapper" }) do |f|
+  .field-group
+    = f.label :email, class: 'input-label'
+    = f.email_field :email, class: 'input-box'
+
+  .field-group
+    = f.label :password, class: 'input-label'
+    = f.password_field :password, class: 'input-box'
+
+  .actions
+    = f.submit "Submit", class: 'submit-button'
