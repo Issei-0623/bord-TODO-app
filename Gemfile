@@ -17,9 +17,9 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem 'faker'
-gem 'hamlit'
-gem 'annotate'
+gem "faker"
+gem "hamlit"
+gem "annotate"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -49,6 +49,7 @@ group :development, :test do
   gem "pry"
   gem "pry-rescue"
   gem "pry-stack_explorer"
+  gem "rubocop-rails"
 
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
@@ -61,7 +62,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'erb2haml'
+  gem "erb2haml"
 end
 
 group :test do
