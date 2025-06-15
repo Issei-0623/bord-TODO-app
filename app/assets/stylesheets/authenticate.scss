@@ -1,3 +1,63 @@
+.auth-title {
+  width: 868px;
+  height: 133px;
+  background-color: #f25c5c;
+  color: white;
+  text-align: center;
+  line-height: 133px;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 auto 40px;
+}
+
 .authenticate-container {
-  background-color: #ff0033;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.authenticate-card {
+  width: 420px;
+  padding: 20px 30px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+
+  .card-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .field-group {
+    margin-bottom: 20px;
+
+    .input-label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .input-box {
+      width: 362px;
+      height: 40px;
+      padding: 5px 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  }
+
+  .submit-button {
+    width: 362px;
+    height: 40px;
+    background-color: #ffcc00;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: #e6b800;
+    }
+  }
 }
