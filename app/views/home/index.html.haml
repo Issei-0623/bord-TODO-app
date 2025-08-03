@@ -1,1 +1,17 @@
 %h1 Bord Todo App
+
+.authenticate-page
+  .auth-title Board機能
+
+  .cards-container
+    - @latest_boards.each do |board|
+      .authenticate-card
+        %h3= board.title
+        %p= board.content
+        %p 投稿者: #{board.user.email}
+
+  = link_to '新規作成', new_board_path, class: 'btn-primary'
+  = link_to 'ボード一覧へ', boards_path, class: 'btn-secondary'
+  = link_to 'ログイン / サインイン', users_auth_cards_path
+  = link_to 'ログアウト', destroy_user_session_path, method: :delete
+
