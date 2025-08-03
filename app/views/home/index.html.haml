@@ -8,10 +8,14 @@
       .authenticate-card
         %h3= board.title
         %p= board.content
-        %p 投稿者: #{board.user.email}
+        %p 作成者: #{board.user.email}
+        = image_tag '/app/assets/images/profile_picture_common.jpeg'
+
+        - if board.user == current_user
+          = link_to '編集', edit_board_path(board), class: 'btn btn-outline-primary'
+          = link_to '削除', board_path(board), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger'
 
   = link_to '新規作成', new_board_path, class: 'btn-primary'
   = link_to 'ボード一覧へ', boards_path, class: 'btn-secondary'
   = link_to 'ログイン / サインイン', users_auth_cards_path
   = link_to 'ログアウト', destroy_user_session_path, method: :delete
-
