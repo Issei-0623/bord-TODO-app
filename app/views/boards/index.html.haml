@@ -2,6 +2,7 @@
 
 - @boards.each do |board|
   .board-card
-    %h2= board.title
+    %h3
+      = link_to board.title, board_path(board)
     %p= board.content
     %p 投稿者：= board.user.email

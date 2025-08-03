@@ -1,0 +1,7 @@
+%h2= @task.title
+
+%p= @task.content
+%p 投稿者: #{@task.user.email}
+%p 期限: #{@task.deadline}
+
+= link_to 'ボードに戻る', board_path(@board), class: 'btn btn-secondary'

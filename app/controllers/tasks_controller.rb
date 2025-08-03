@@ -3,15 +3,22 @@ class TasksController < ApplicationController
 
   def create
     @board = Board.find(params[:board_id])
-    @task = current_user.tasks.build(task_params)
-    @task.board = @board
+    @task = @board.tasks.build(task_params)
+    @task.user = current_user  # 投稿者を紐づける
 
     if @task.save
-      redirect_to board_path(@board), notice: 'タスクを作成しました'
+      redirect_to board_path(@board), notice: 'タスクを追加しました'
     else
-      redirect_to board_path(@board), alert: 'タスクの作成に失敗しました'
+      @tasks = @board.tasks.includes(:user)
+      render 'boards/show', status: :unprocessable_entity
     end
   end
+
+  def show
+    @board = Board.find(params[:board_id])  # ネストされたルーティングではこちら
+    @task = @board.tasks.find(params[:id])  # このタスクだけ表示
+  end
+
 
   private
 
