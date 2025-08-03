@@ -4,7 +4,7 @@
 %h3 タスク一覧
 - @tasks.each do |task|
   %div.task
-    %p= task.title
+    = link_to task.title, board_task_path(@board, task)
     %p= task.content
     %p 投稿者: #{task.user.email}
     %p 期限: #{task.deadline}
@@ -17,13 +17,17 @@
         - @task.errors.full_messages.each do |msg|
           %li= msg
 
-  = f.label :title, 'タイトル'
-  = f.text_field :title
+  .form-group
+    = f.label :title, 'タイトル'
+    = f.text_field :title, class: 'form-control'
 
-  = f.label :content, '内容'
-  = f.text_area :content
+  .form-group
+    = f.label :content, '内容'
+    = f.text_area :content, class: 'form-control'
 
-  = f.label :deadline, '期限'
-  = f.date_field :deadline
+  .form-group
+    = f.label :deadline, '期限'
+    = f.date_field :deadline, class: 'form-control'
 
   = f.submit '作成', class: 'btn btn-primary'
+
