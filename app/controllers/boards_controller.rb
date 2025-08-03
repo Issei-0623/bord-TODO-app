@@ -43,6 +43,12 @@ class BoardsController < ApplicationController
     end
   end
 
+  def show
+    @board = Board.find(params[:id])
+    @tasks = @board.tasks.includes(:user).order(created_at: :desc)
+    @task = Task.new
+  end
+
   def destroy
     @board.destroy
     redirect_to root_path, notice: 'ボードを削除しました'

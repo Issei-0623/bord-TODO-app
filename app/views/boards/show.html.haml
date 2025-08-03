@@ -1,0 +1,29 @@
+%h2= @board.title
+%p= @board.content
+
+%h3 タスク一覧
+- @tasks.each do |task|
+  %div.task
+    %p= task.title
+    %p= task.content
+    %p 投稿者: #{task.user.email}
+    %p 期限: #{task.deadline}
+
+%h3 タスクを追加
+= form_with model: [@board, @task], local: true do |f|
+  - if @task.errors.any?
+    #error_explanation
+      %ul
+        - @task.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.label :title, 'タイトル'
+  = f.text_field :title
+
+  = f.label :content, '内容'
+  = f.text_area :content
+
+  = f.label :deadline, '期限'
+  = f.date_field :deadline
+
+  = f.submit '作成', class: 'btn btn-primary'

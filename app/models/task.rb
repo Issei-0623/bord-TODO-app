@@ -1,24 +1,26 @@
 # == Schema Information
 #
-# Table name: boards
+# Table name: tasks
 #
 #  id         :integer          not null, primary key
-#  user_id    :integer          not null
 #  title      :string           not null
-#  content    :text             not null
+#  content    :text
+#  deadline   :date
+#  user_id    :integer          not null
+#  board_id   :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_boards_on_user_id  (user_id)
+#  index_tasks_on_board_id  (board_id)
+#  index_tasks_on_user_id   (user_id)
 #
 
-class Board < ApplicationRecord
+class Task < ApplicationRecord
   belongs_to :user
-  has_many :tasks, dependent: :destroy
+  belongs_to :board
 
   validates :title, presence: true   # タイトルが必須
   validates :content, presence: true # コンテンツ（概要）が必須
-
 end
