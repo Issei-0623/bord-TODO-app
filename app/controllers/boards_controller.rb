@@ -1,5 +1,6 @@
 class BoardsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :set_board, only: [:edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
 # ボード一覧を表示する処理
 # ボードと一緒にユーザー情報も読み込む
@@ -29,12 +30,39 @@ class BoardsController < ApplicationController
     end
   end
 
+  def edit
+  @board = current_user.boards.find(params[:id])
+  end
+
+  def update
+    @board = current_user.boards.find(params[:id])
+    if @board.update(board_params)
+      redirect_to root_path, notice: 'ボードを更新しました'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @board.destroy
+    redirect_to root_path, notice: 'ボードを削除しました'
+  end
+
 # 外部から直接呼び出せないようにする処理（Strong Parametersの定義）
 # フォームで board に関するデータが送られてこないとエラー発生
 # title と content のみを許可する
   private
   def board_params
     params.require(:board).permit(:title, :content)
+  end
+
+  def set_board
+    @board = Board.find(params[:id])
+  end
+
+# 作成者だけが編集・削除できるように制限
+  def correct_user
+    redirect_to root_path, alert: '権限がありません' unless @board.user == current_user
   end
 
 end
