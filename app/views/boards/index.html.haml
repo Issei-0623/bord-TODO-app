@@ -1,0 +1,7 @@
+%h1 ボード一覧
+
+- @boards.each do |board|
+  .board-card
+    %h2= board.title
+    %p= board.content
+    %p 投稿者：= board.user.email
