@@ -7,4 +7,22 @@
 - if @task.eyecatch.attached?
   = image_tag @task.eyecatch, class: 'task-eyecatch'
 
+.task_content
+  = @task.content
+.task_heart
+  = image_tag 'heart.svg'
+
+.container
+  = link_to new_task_comment_path(@task) do
+    .btn-secondary
+      コメントを追加
+
+.task
+  %h3 コメント一覧
+  - @comments.each do |comment|
+    %p= comment.content
+    %p= "投稿者: #{comment.user.email}"
+
+= link_to 'コメントを追加', new_task_comment_path(@task)
+
 = link_to 'タスク一覧に戻る', board_path(@board), class: 'btn btn-secondary'

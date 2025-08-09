@@ -16,7 +16,11 @@ class TasksController < ApplicationController
   end
 
   # GET /boards/:board_id/tasks/:id
-  def show; end
+  def show
+    @board = Board.find(params[:board_id])
+    @task  = @board.tasks.find(params[:id])
+    @comments = @task.comments.includes(:user).order(created_at: :desc)
+  end
 
   # GET /boards/:board_id/tasks/:id/edit
   def edit
