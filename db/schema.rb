@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_03_211829) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_09_115528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -51,6 +51,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_03_211829) do
     t.index ["user_id"], name: "index_boards_on_user_id"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "task_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_comments_on_task_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "tasks", force: :cascade do |t|
     t.string "title", null: false
     t.text "content"
@@ -78,6 +88,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_03_211829) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boards", "users"
+  add_foreign_key "comments", "tasks"
+  add_foreign_key "comments", "users"
   add_foreign_key "tasks", "boards"
   add_foreign_key "tasks", "users"
 end
