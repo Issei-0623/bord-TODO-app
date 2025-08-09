@@ -4,4 +4,7 @@
 %p 投稿者: #{@task.user.email}
 %p 期限: #{@task.deadline}
 
+- if @task.eyecatch.attached?
+  = image_tag @task.eyecatch, class: 'task-eyecatch'
+
 = link_to 'ボードに戻る', board_path(@board), class: 'btn btn-secondary'

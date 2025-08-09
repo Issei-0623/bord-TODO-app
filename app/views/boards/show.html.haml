@@ -9,13 +9,15 @@
     %p 投稿者: #{task.user.email}
     %p 期限: #{task.deadline}
 
+    - if task.eyecatch.attached?
+      = image_tag task.eyecatch, class: 'task-eyecatch'
+
 %h3 タスクを追加
 = form_with model: [@board, @task], local: true do |f|
   - if @task.errors.any?
-    #error_explanation
-      %ul
-        - @task.errors.full_messages.each do |msg|
-          %li= msg
+    %ul
+      - @task.errors.full_messages.each do |msg|
+        %li= msg
 
   .form-group
     = f.label :title, 'タイトル'
@@ -28,6 +30,10 @@
   .form-group
     = f.label :deadline, '期限'
     = f.date_field :deadline, class: 'form-control'
+
+  .form-group
+    = f.label :eyecatch, 'アイキャッチ画像'
+    = f.file_field :eyecatch, class: 'form-control'
 
   = f.submit '作成', class: 'btn btn-primary'
 
