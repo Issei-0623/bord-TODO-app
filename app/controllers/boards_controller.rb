@@ -59,7 +59,7 @@ class BoardsController < ApplicationController
 # title と content のみを許可する
   private
   def board_params
-    params.require(:board).permit(:title, :content)
+    params.require(:board).permit(:title, :content, :deadline, :eyecatch)
   end
 
   def set_board

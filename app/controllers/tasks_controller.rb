@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
 
+
   def create
     @board = Board.find(params[:board_id])
     @task = @board.tasks.build(task_params)
@@ -23,6 +24,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline)
+    params.require(:task).permit(:title, :content, :deadline, :eyecatch)
   end
 end

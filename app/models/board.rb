@@ -17,6 +17,7 @@
 class Board < ApplicationRecord
   belongs_to :user
   has_many :tasks, dependent: :destroy
+  has_one_attached :eyecatch
 
   validates :title, presence: true   # タイトルが必須
   validates :content, presence: true # コンテンツ（概要）が必須
