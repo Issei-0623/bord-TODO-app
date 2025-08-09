@@ -1,0 +1,29 @@
+%h2 タスクを編集
+= form_with model: [@board, @task], local: true do |f|
+  - if @task.errors.any?
+    #error_explanation
+      %ul
+        - @task.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :title, 'タイトル'
+    = f.text_field :title, class: 'form-control'
+
+  .form-group
+    = f.label :content, '内容'
+    = f.text_area :content, class: 'form-control'
+
+  .form-group
+    = f.label :deadline, '期限'
+    = f.date_field :deadline, class: 'form-control'
+
+  .form-group
+    = f.label :eyecatch, 'アイキャッチ画像'
+    - if @task.eyecatch.attached?
+      %p 現在の画像
+      = image_tag @task.eyecatch, class: 'task-eyecatch'
+    = f.file_field :eyecatch, class: 'form-control'
+
+  = f.submit '更新', class: 'btn btn-primary'
+  = link_to 'キャンセル', board_task_path(@board, @task), class: 'btn btn-secondary'

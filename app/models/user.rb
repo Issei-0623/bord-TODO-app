@@ -6,4 +6,9 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+  def has_written?(task)
+    tasks.exists?(id: task.id)
+  end
+
 end
