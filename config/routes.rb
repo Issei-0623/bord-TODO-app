@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:new, :create]
   end
 
+  resource :profile, only: [:show, :edit, :update]
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "users/auth_cards", to: "users#auth_cards"

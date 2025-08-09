@@ -3,6 +3,8 @@
 %p= @task.content
 %p 投稿者: #{@task.user.email}
 %p 期限: #{@task.deadline}
+= image_tag current_user.avatar_image
+
 
 - if @task.eyecatch.attached?
   = image_tag @task.eyecatch, class: 'task-eyecatch'
