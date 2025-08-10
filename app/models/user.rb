@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one :profile, dependent: :destroy
+  has_one_attached :avatar
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -31,4 +32,13 @@ class User < ApplicationRecord
     end
   end
 
+  def avatar_url(size: [28, 28])
+    if avatar&.attached?
+      avatar.variant(resize_to_fill: size).processed
+    elsif profile&.avatar&.attached?
+      profile.avatar.variant(resize_to_fill: size).processed
+    else
+      'default-avatar.png' # /assets/ は付けない（Propshaft）
+    end
+  end
 end
