@@ -6,11 +6,17 @@
   .cards-container
     - @latest_boards.each do |board|
       .authenticate-card
+        %h3 Boards
+
         %h3
-          = link_to board.title, board_path(board)
+          .title-row
+            = link_to board.title, board_path(board), class: 'board-title'
+            = image_tag board.user.avatar_url, class: 'avatar'
+
+
         %p= board.content
-        %p 作成者: #{board.user.email}
-        = image_tag '/app/assets/images/profile_picture_common.jpeg'
+        %p 作成者: #{board.user.profile&.nickname.presence || board.user.email}
+
 
         - if board.user == current_user
           = link_to '編集', edit_board_path(board), class: 'btn btn-outline-primary'
@@ -19,5 +25,9 @@
 
   = link_to '新規作成', new_board_path, class: 'btn-primary'
   = link_to 'ボード一覧へ', boards_path, class: 'btn-secondary'
-  = link_to 'ログイン / サインイン', users_auth_cards_path
-  = link_to 'ログアウト', destroy_user_session_path, method: :delete
+
+  - unless user_signed_in?
+    = link_to 'ログイン / サインイン', users_auth_cards_path
+  - else
+    = link_to 'ログアウト', destroy_user_session_path, method: :delete
+
