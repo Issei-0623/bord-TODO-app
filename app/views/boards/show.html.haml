@@ -18,7 +18,7 @@
         data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' },
         class: 'btn btn-outline-danger'
 
-%h3 タスクを追加
+%h3#new-task タスクを追加
 = form_with model: [@board, @task], local: true do |f|
   - if @task.errors.any?
     %ul
