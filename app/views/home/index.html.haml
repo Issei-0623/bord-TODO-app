@@ -6,22 +6,29 @@
   .cards-container
     - @latest_boards.each do |board|
       .authenticate-card
-        %h3 Boards
+        .board-head
+          %span.board-label Board
+          = image_tag board.user.avatar_url(size: [24,24]), class: 'avatar avatar--sm'
 
         %h3
           .title-row
             = link_to board.title, board_path(board), class: 'board-title'
-            = image_tag board.user.avatar_url, class: 'avatar'
+
+            - if user_signed_in? && board.user == current_user
+              .dropdown(data-controller="dropdown")
+                = image_tag 'actions.svg',
+                            class: 'dropbtn',
+                            alt: 'Actions',
+                            data: { action: "click->dropdown#toggle" }
+                .dropdown-menu.hidden(data-dropdown-target="menu")
+                  = link_to '編集', edit_board_path(board)
+                  = link_to '削除',
+                            board_path(board),
+                            method: :delete, data: { confirm: '本当に削除しますか？' }
 
 
         %p= board.content
         %p 作成者: #{board.user.profile&.nickname.presence || board.user.email}
-
-
-        - if board.user == current_user
-          = link_to '編集', edit_board_path(board), class: 'btn btn-outline-primary'
-          = link_to '削除', board_path(board), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger'
-        
 
   = link_to '新規作成', new_board_path, class: 'btn-primary'
   = link_to 'ボード一覧へ', boards_path, class: 'btn-secondary'

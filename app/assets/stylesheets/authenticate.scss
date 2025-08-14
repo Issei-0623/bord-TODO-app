@@ -52,53 +52,70 @@
     font-size: 20px;
     margin-bottom: 20px;
   }
-
-  .form-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-
-  .field-group {
-    margin-bottom: 20px;
-
-    .input-label {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 14px;
-    }
-
-    .input-box {
-      width: 100%;
-      height: 40px;
-      padding: 5px 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-  }
-
-  .submit-button {
-    width: 100%;
-    height: 40px;
-    margin-top: 20px;
-    background-color: #ffcc00;
-    border: none;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 4px;
-
-    &:hover {
-      background-color: #e6b800;
-    }
-  }
 }
 
 .title-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
 }
+
+.board-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:#8b8b8b;
+  font-size:14px;
+  margin: 4px 0 8px;
+}
+.board-label{
+  letter-spacing:.2px;
+}
+.avatar--sm{ width:24px; height:24px; }
+
+  .board-title { font-weight: 600; }
+
+  .dropdown {
+    margin-left: auto;
+    position: relative;
+
+    .dropbtn {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      display: block;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 26px;
+      min-width: 140px;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      padding: 6px 0;
+      z-index: 20;
+
+      a {
+        display: block;
+        padding: 10px 14px;
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+        &:hover { background: #f7f7f7; }
+      }
+    }
+
+    .dropdown-menu:not(.hidden) {
+      display: block;
+    }
+  }
+
+
+.hidden { display: none !important; }
 
 .avatar {
   width: 28px;
@@ -106,7 +123,6 @@
   border-radius: 50%;
   object-fit: cover;
 }
-
 
 @media (max-width: 899px) {
   .authenticate-page .cards-container {
