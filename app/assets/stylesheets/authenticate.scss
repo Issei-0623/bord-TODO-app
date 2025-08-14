@@ -29,7 +29,7 @@
 
 .authenticate-card {
   width: 380px;
-  min-height: 550px;
+  min-height: 650px;
   padding: 20px 30px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -135,23 +135,6 @@
   border: 1px solid #e5e5e5;
   border-radius: 12px;
   padding: 12px;
-  position: relative;
-  // padding-bottom: 24px; // 下に余白を確保
-
-  &__comments {
-    position: absolute;
-    right: 8px;
-    bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.85rem;
-    color: #666;
-
-    img {
-      display: block;
-    }
-  }
 }
 
 .task-card__row {
@@ -184,6 +167,87 @@
   font-size: 13px;
 }
 
+.board-description {
+  margin: 2px 0 6px;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.card-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
+
+/* 右上固定のグローバルメニュー */
+.global-menu {
+  position: fixed;
+  top: 70px;
+  right: 80px;
+  z-index: 100; /* 矢印やカードより前に */
+}
+
+.menu-btn {
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: block;
+}
+
+
+/* 画面端に出るページ送り矢印 */
+.page-arrow {
+  position: fixed;            /* 画面端に固定 */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #555;
+  border: 1px solid #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  z-index: 50;               /* カードより手前に */
+  transition: background-color 0.2s ease; 
+}
+
+.page-arrow--left  { left: 16px; }
+.page-arrow--right { right: 16px; }
+
+.page-arrow:hover { background: #333; }
+
+
+/* タスクカードをコメント固定の基準にする */
+.task-card {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 12px;
+  position: relative;
+  padding-bottom: 28px;
+}
+
+/* 右下固定のコメント表示 */
+.task-card__comments {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #777;
+  font-size: 12px;
+}
+
+.task-card__comments.is-zero { display: none; }
+
 .task-empty {
   background: #fafafa;
   border: 1px dashed #e0e0e0;
@@ -200,44 +264,6 @@
   }
 }
 
-.board-description {
-  margin: 2px 0 6px;
-  font-size: 14px;
-  color: #333;
-  line-height: 1.4;
-}
-
-.card-footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: center;
-  padding-top: 12px;
-}
-
-/* 画面端に出るページ送り矢印 */
-.page-arrow {
-  position: fixed;            /* 画面端に固定 */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #fff;
-  border: 1px solid #e6e6e6;
-  box-shadow: 0 4px 14px rgba(0,0,0,.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: #333;
-  text-decoration: none;
-  z-index: 50;               /* カードより手前に */
-}
-
-.page-arrow--left  { left: 16px; }
-.page-arrow--right { right: 16px; }
-
-.page-arrow:hover { background: #f7f7f7; }
 
 
 @media (max-width: 899px) {

@@ -18,6 +18,22 @@
           .board-description
             = board.content
 
+        / ===== 右上グローバルメニュー =====
+        .global-menu.dropdown{ data: { controller: "dropdown" } }
+          = image_tag "menu.svg",
+            class: "menu-btn",
+            alt: "Menu",
+            loading: "lazy",
+            data: { action: "click->dropdown#toggle" }
+
+          .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+            = link_to '新規作成', new_board_path
+            = link_to 'ボード一覧', boards_path
+            = link_to 'プロフィール編集', edit_profile_path
+            = link_to 'ログアウト',
+              destroy_user_session_path,
+              method: :delete
+
         / ===== ページャ =====
         - if @page > 1
           = link_to '‹', root_path(page: @page - 1, per_page: @per_page), class: 'page-arrow page-arrow--left', aria_label: '前へ'
@@ -61,9 +77,10 @@
                   %span= task.user.profile&.nickname.presence || task.user.email
 
                 / 右下に固定するコメント表示
-                .task-card__comments
+                - count = task.comments.size
+                .task-card__comments{ class: (count.zero? ? 'is-zero' : nil) }
                   = image_tag 'comment.svg', alt: 'Comments', width: 16, height: 16, loading: "lazy"
-                  %span= task.comments.size
+                  %span= count
 
         / ===== タスクの追加（カードの下に配置） =====
         .card-footer
@@ -75,11 +92,3 @@
             = link_to 'ログインしてタスク追加',
               users_auth_cards_path,
               class: 'btn-primary'
-
-  = link_to '新規作成', new_board_path, class: 'btn-secondary'
-  = link_to 'ボード一覧へ', boards_path, class: 'btn-secondary'
-
-  - unless user_signed_in?
-    = link_to 'ログイン / サインイン', users_auth_cards_path
-  - else
-    = link_to 'ログアウト', destroy_user_session_path, method: :delete
