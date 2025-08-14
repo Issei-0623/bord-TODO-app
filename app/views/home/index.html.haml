@@ -7,7 +7,11 @@
         / ===== ボード見出し（タイトル＋作成者アバター） =====
         .board-head
           %span.board-label= board.title
-          = image_tag(board.user.avatar_url, class: 'avatar avatar--sm', alt: 'Board owner')
+          = image_tag board.user.avatar_url,
+            class: 'avatar avatar--sm',
+            alt: 'Board owner',
+            loading: 'lazy', width: 24, height: 24
+
 
         / ===== ボード概要 =====
         - if board.content.present?
@@ -22,38 +26,44 @@
 
         / ===== タスク一覧（カードで縦並び） =====
         .task-list
-          - board.tasks.order(created_at: :desc).each do |task|
-            .task-card
-              .task-card__row
-                - if user_signed_in?
-                  = link_to task.title, board_task_path(board, task), class: 'task-title'
-                - else
-                  = link_to task.title, users_auth_cards_path, class: 'task-title'
+          - if board.tasks.empty?
+            .task-empty
+              %p まだタスクがありません
+          - else
+            - board.tasks.order(created_at: :desc).each do |task|
+              .task-card
+                .task-card__row
+                  - if user_signed_in?
+                    = link_to task.title, board_task_path(board, task), class: 'task-title'
+                  - else
+                    = link_to task.title, users_auth_cards_path, class: 'task-title'
 
-                - if user_signed_in? && task.user == current_user
-                  .dropdown(data-controller="dropdown")
-                    = image_tag 'actions.svg',
-                      class: 'dropbtn',
-                      alt: 'Actions',
-                      data: { action: "click->dropdown#toggle" }
-                    .dropdown-menu.hidden(data-dropdown-target="menu")
-                      = link_to '編集', edit_board_task_path(board, task)
-                      = link_to '削除',
-                        board_task_path(board, task),
-                        method: :delete,
-                        data: { turbo_confirm: '本当に削除しますか？' }
+                  - if user_signed_in? && task.user == current_user
+                    .dropdown(data-controller="dropdown")
+                      = image_tag 'actions.svg',
+                        class: 'dropbtn',
+                        alt: 'Actions',
+                        data: { action: "click->dropdown#toggle" }
+                      .dropdown-menu.hidden(data-dropdown-target="menu")
+                        = link_to '編集', edit_board_task_path(board, task)
+                        = link_to '削除',
+                          board_task_path(board, task),
+                          method: :delete,
+                          data: { turbo_confirm: '本当に削除しますか？' }
 
-              .task-card__deadline
-                - if task.deadline.present?
-                  %span.deadline-label 期限:
-                  %span= l(task.deadline, format: :long)
+                .task-card__deadline
+                  - if task.deadline.present?
+                    %span.deadline-label 期限:
+                    %span= l(task.deadline, format: :long)
 
-              .task-card__meta
-                = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner'
-                %span= task.user.profile&.nickname.presence || task.user.email
-                %span ·
-                = image_tag 'comment.svg', alt: 'Comments', width: 16, height: 16
-                %span= task.comments.size
+                .task-card__meta
+                  = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner'
+                  %span= task.user.profile&.nickname.presence || task.user.email
+
+                / 右下に固定するコメント表示
+                .task-card__comments
+                  = image_tag 'comment.svg', alt: 'Comments', width: 16, height: 16, loading: "lazy"
+                  %span= task.comments.size
 
         / ===== タスクの追加（カードの下に配置） =====
         .card-footer
