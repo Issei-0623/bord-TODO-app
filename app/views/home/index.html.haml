@@ -6,29 +6,38 @@
   .cards-container
     - @latest_boards.each do |board|
       .authenticate-card
+        / ===== ボード見出し（タイトル＋作成者アバター） =====
         .board-head
-          %span.board-label Board
-          = image_tag board.user.avatar_url(size: [24,24]), class: 'avatar avatar--sm'
+          %span.board-label= board.title
+          = image_tag(board.user.avatar_url, class: 'avatar avatar--sm', alt: 'Board owner')
 
-        %h3
-          .title-row
-            = link_to board.title, board_path(board), class: 'board-title'
+        / ===== ボード概要 =====
+        - if board.content.present?
+          .board-description
+            = board.content
 
-            - if user_signed_in? && board.user == current_user
-              .dropdown(data-controller="dropdown")
-                = image_tag 'actions.svg',
-                            class: 'dropbtn',
-                            alt: 'Actions',
-                            data: { action: "click->dropdown#toggle" }
-                .dropdown-menu.hidden(data-dropdown-target="menu")
-                  = link_to '編集', edit_board_path(board)
-                  = link_to '削除',
-                            board_path(board),
-                            method: :delete, data: { confirm: '本当に削除しますか？' }
+        / ===== タスク一覧（カードで縦並び） =====
+        .task-list
+          - board.tasks.order(created_at: :desc).each do |task|
+            .task-card
+              .task-card__row
+                = link_to task.title, board_task_path(board, task), class: 'task-title'
+                - if user_signed_in? && task.user == current_user
+                  .dropdown(data-controller="dropdown")
+                    = image_tag 'actions.svg',
+                                class: 'dropbtn',
+                                alt: 'Actions',
+                                data: { action: "click->dropdown#toggle" }
+                    .dropdown-menu.hidden(data-dropdown-target="menu")
+                      = link_to '編集', edit_board_task_path(board, task)
+                      = link_to '削除',
+                                board_path(board),
+                                method: :delete,
+                                data: { confirm: '本当に削除しますか？' }
 
-
-        %p= board.content
-        %p 作成者: #{board.user.profile&.nickname.presence || board.user.email}
+              .task-card__meta
+                = image_tag(task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner')
+                %span= task.user.profile&.nickname.presence || task.user.email
 
   = link_to '新規作成', new_board_path, class: 'btn-primary'
   = link_to 'ボード一覧へ', boards_path, class: 'btn-secondary'
@@ -37,4 +46,3 @@
     = link_to 'ログイン / サインイン', users_auth_cards_path
   - else
     = link_to 'ログアウト', destroy_user_session_path, method: :delete
-
