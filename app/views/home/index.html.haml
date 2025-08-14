@@ -1,7 +1,5 @@
-%h1 Bord Todo App
-
 .authenticate-page
-  .auth-title Board機能
+  .auth-title Bord Todo App
 
   .cards-container
     - @latest_boards.each do |board|
@@ -21,25 +19,49 @@
           - board.tasks.order(created_at: :desc).each do |task|
             .task-card
               .task-card__row
-                = link_to task.title, board_task_path(board, task), class: 'task-title'
+                - if user_signed_in?
+                  = link_to task.title, board_task_path(board, task), class: 'task-title'
+                - else
+                  = link_to task.title, users_auth_cards_path, class: 'task-title'
+
                 - if user_signed_in? && task.user == current_user
                   .dropdown(data-controller="dropdown")
                     = image_tag 'actions.svg',
-                                class: 'dropbtn',
-                                alt: 'Actions',
-                                data: { action: "click->dropdown#toggle" }
+                      class: 'dropbtn',
+                      alt: 'Actions',
+                      data: { action: "click->dropdown#toggle" }
                     .dropdown-menu.hidden(data-dropdown-target="menu")
                       = link_to '編集', edit_board_task_path(board, task)
                       = link_to '削除',
-                                board_path(board),
-                                method: :delete,
-                                data: { confirm: '本当に削除しますか？' }
+                        board_task_path(board, task),
+                        method: :delete,
+                        data: { turbo_confirm: '本当に削除しますか？' }
+
+              .task-card__deadline
+                - if task.deadline.present?
+                  %span.deadline-label 期限:
+                  %span= l(task.deadline, format: :long)
 
               .task-card__meta
-                = image_tag(task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner')
+                = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner'
                 %span= task.user.profile&.nickname.presence || task.user.email
+                %span ·
+                = image_tag 'comment.svg', alt: 'Comments', width: 16, height: 16
+                %span= task.comments.size
 
-  = link_to '新規作成', new_board_path, class: 'btn-primary'
+        / ===== タスクの追加（カードの下に配置） =====
+        .card-footer
+          - if user_signed_in?
+            = link_to '+ タスク追加',
+              board_path(board, anchor: 'new-task'),
+              class: 'btn-primary'
+          - else
+            = link_to 'ログインしてタスク追加',
+              users_auth_cards_path,
+              class: 'btn-primary'
+
+
+  = link_to '新規作成', new_board_path, class: 'btn-secondary'
   = link_to 'ボード一覧へ', boards_path, class: 'btn-secondary'
 
   - unless user_signed_in?
