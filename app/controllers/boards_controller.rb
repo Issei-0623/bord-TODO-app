@@ -6,7 +6,20 @@ class BoardsController < ApplicationController
 # ボードと一緒にユーザー情報も読み込む
 # 新しい順に並べる
   def index
-    @boards = Board.includes(:user).order(created_at: :desc)
+    per_page = params[:per_page].presence&.to_i
+    per_page = 5 if per_page.nil? || per_page <= 0 # デフォルト5。JSが付けたらその値を使う
+
+    @page = params[:page].to_i
+    @page = 1 if @page < 1
+
+    @boards = Board
+      .includes(user: { avatar_attachment: :blob }, tasks: [:user, { comments: :user }])
+      .order(created_at: :desc)
+      .offset((@page - 1) * per_page)
+      .limit(per_page)
+
+    @total_pages = (Board.count / per_page.to_f).ceil
+    @per_page    = per_page # ビューで再利用
   end
 
 
