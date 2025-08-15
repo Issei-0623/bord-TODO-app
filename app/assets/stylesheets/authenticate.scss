@@ -1,4 +1,5 @@
 .auth-title {
+  position: relative;
   max-width: none;
   width: 100%;
   height: 100px;
@@ -52,6 +53,11 @@
   }
 }
 
+.authenticate-card:hover {
+  background-color: #d7d7d7; /* 薄いグレー */
+  transition: background-color 0.2s ease; /* 色変化をなめらかに */
+}
+
 .title-row {
   display: flex;
   align-items: center;
@@ -63,7 +69,7 @@
   align-items:center;
   justify-content:space-between;
   color: #333;
-  font-size:14px;
+  font-size:20px;
   font-weight: bold;
   margin: 2px 0 4px;
 }
@@ -183,18 +189,21 @@
 
 /* 右上固定のグローバルメニュー */
 .global-menu {
-  position: fixed;
-  top: 70px;
-  right: 80px;
-  z-index: 100; /* 矢印やカードより前に */
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  transform: translateY(-50%);
+  z-index: 2;
 }
 
 .menu-btn {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
   display: block;
 }
+
+
 
 
 /* 画面端に出るページ送り矢印 */
@@ -215,7 +224,7 @@
   color: #fff;
   text-decoration: none;
   z-index: 50;               /* カードより手前に */
-  transition: background-color 0.2s ease; 
+  transition: background-color 0.2s ease;
 }
 
 .page-arrow--left  { left: 16px; }
@@ -271,4 +280,11 @@
     flex-direction: column;
     align-items: center;
   }
+}
+
+.board-head-link,
+.task-empty-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
