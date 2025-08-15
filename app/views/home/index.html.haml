@@ -1,50 +1,55 @@
 .authenticate-page
-  .auth-title Bord Todo App
+  .auth-title
+    Bord Todo App
+
+    / ===== 右上グローバルメニュー（タイトル帯の中に配置） =====
+    .global-menu.dropdown{ data: { controller: "dropdown" } }
+      = image_tag "menu.svg",
+        class: "menu-btn",
+        alt: "Menu",
+        loading: "lazy",
+        data: { action: "click->dropdown#toggle" }
+
+      .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+        = link_to '新規作成', new_board_path
+        = link_to 'ボード一覧', boards_path
+        = link_to 'プロフィール編集', edit_profile_path
+        = link_to 'ログアウト',
+          destroy_user_session_path,
+          method: :delete
 
   .cards-container
     - @latest_boards.each do |board|
-      .authenticate-card
-        / ===== ボード見出し（タイトル＋作成者アバター） =====
-        .board-head
-          %span.board-label= board.title
-          = image_tag board.user.avatar_url,
-            class: 'avatar avatar--sm',
-            alt: 'Board owner',
-            loading: 'lazy', width: 24, height: 24
+      / ============ カード全体クリックを有効化（内部操作は除外） ============
+      .authenticate-card{
+        data: {
+          controller: "cardlink",
+          cardlink_url_value: board_path(board),
+          action: "click->cardlink#go keydown->cardlink#key"
+        },
+        role: "link",
+        tabindex: 0
+      }
 
+        / ===== 見出し（クリック範囲は a にも付ける：アクセシビリティ用） =====
+        = link_to board_path(board), class: 'board-head-link', data: { cardlink_ignore: true } do
+          .board-head
+            %span.board-label= board.title
+            = image_tag board.user.avatar_url,
+              class: 'avatar avatar--sm',
+              alt: 'Board owner',
+              loading: 'lazy', width: 24, height: 24
 
         / ===== ボード概要 =====
         - if board.content.present?
-          .board-description
-            = board.content
+          .board-description= board.content
 
-        / ===== 右上グローバルメニュー =====
-        .global-menu.dropdown{ data: { controller: "dropdown" } }
-          = image_tag "menu.svg",
-            class: "menu-btn",
-            alt: "Menu",
-            loading: "lazy",
-            data: { action: "click->dropdown#toggle" }
-
-          .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
-            = link_to '新規作成', new_board_path
-            = link_to 'ボード一覧', boards_path
-            = link_to 'プロフィール編集', edit_profile_path
-            = link_to 'ログアウト',
-              destroy_user_session_path,
-              method: :delete
-
-        / ===== ページャ =====
-        - if @page > 1
-          = link_to '‹', root_path(page: @page - 1, per_page: @per_page), class: 'page-arrow page-arrow--left', aria_label: '前へ'
-        - if @page < @total_pages
-          = link_to '›', root_path(page: @page + 1, per_page: @per_page), class: 'page-arrow page-arrow--right', aria_label: '次へ'
-
-        / ===== タスク一覧（カードで縦並び） =====
+        / ===== タスク一覧 =====
         .task-list
           - if board.tasks.empty?
-            .task-empty
-              %p まだタスクがありません
+            = link_to board_path(board), class: 'task-empty-link', data: { cardlink_ignore: true } do
+              .task-empty
+                %p まだタスクがありません
           - else
             - board.tasks.order(created_at: :desc).each do |task|
               .task-card
@@ -55,17 +60,17 @@
                     = link_to task.title, users_auth_cards_path, class: 'task-title'
 
                   - if user_signed_in? && task.user == current_user
-                    .dropdown(data-controller="dropdown")
+                    .dropdown{ data: { controller: "dropdown" } }
                       = image_tag 'actions.svg',
                         class: 'dropbtn',
                         alt: 'Actions',
-                        data: { action: "click->dropdown#toggle" }
-                      .dropdown-menu.hidden(data-dropdown-target="menu")
-                        = link_to '編集', edit_board_task_path(board, task)
+                        data: { action: "click->dropdown#toggle", cardlink_ignore: true }
+                      .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+                        = link_to '編集',  edit_board_task_path(board, task), data: { cardlink_ignore: true }
                         = link_to '削除',
                           board_task_path(board, task),
                           method: :delete,
-                          data: { turbo_confirm: '本当に削除しますか？' }
+                          data: { turbo_confirm: '本当に削除しますか？', cardlink_ignore: true }
 
                 .task-card__deadline
                   - if task.deadline.present?
@@ -73,22 +78,29 @@
                     %span= l(task.deadline, format: :long)
 
                 .task-card__meta
-                  = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner'
+                  = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner', loading: 'lazy'
                   %span= task.user.profile&.nickname.presence || task.user.email
 
-                / 右下に固定するコメント表示
                 - count = task.comments.size
                 .task-card__comments{ class: (count.zero? ? 'is-zero' : nil) }
-                  = image_tag 'comment.svg', alt: 'Comments', width: 16, height: 16, loading: "lazy"
+                  = image_tag 'comment.svg', alt: 'Comments', width: 16, height: 16, loading: 'lazy'
                   %span= count
 
-        / ===== タスクの追加（カードの下に配置） =====
+        / ===== フッター：+タスク追加（カード遷移はさせない） =====
         .card-footer
           - if user_signed_in?
             = link_to '+ タスク追加',
               board_path(board, anchor: 'new-task'),
-              class: 'btn-primary'
+              class: 'btn-primary',
+              data: { cardlink_ignore: true }
           - else
             = link_to 'ログインしてタスク追加',
               users_auth_cards_path,
-              class: 'btn-primary'
+              class: 'btn-primary',
+              data: { cardlink_ignore: true }
+
+  / ===== 画面端のページ送り（必要なら表示） =====
+  - if @page > 1
+    = link_to '‹', root_path(page: @page - 1, per_page: @per_page), class: 'page-arrow page-arrow--left', aria_label: '前へ'
+  - if @page < @total_pages
+    = link_to '›', root_path(page: @page + 1, per_page: @per_page), class: 'page-arrow page-arrow--right', aria_label: '次へ'
