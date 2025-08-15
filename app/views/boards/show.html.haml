@@ -1,45 +1,84 @@
-%h2= @board.title
-%p= @board.content
+.authenticate-page-task
+  .auth-title-task
+    タスク一覧
 
-%h3 タスク一覧
-- @tasks.each do |task|
-  %div.task
-    = link_to task.title, board_task_path(@board, task)
-    %p= task.content
-    %p 投稿者: #{task.user.email}
-    %p 期限: #{task.deadline}
+/ ▼ 全体を包むコンテナ
+.board-show-page
+  / ▼ Boardタイトルと概要
+  .board-header
+    %h2= @board.title
+    %p.board-description= @board.content
 
-    - if task.eyecatch.attached?
-      = image_tag task.eyecatch, class: 'task-eyecatch'
+  / ▼ タスク一覧
+  .board-task-list
+  - @tasks.each do |task|
+    .task-card
+      .task-card__row
+        = link_to task.title, board_task_path(@board, task), class: 'task-title'
 
-    - if user_signed_in? && task.user == current_user
-      = link_to '編集', edit_board_task_path(@board, task), class: 'btn btn-outline-primary'
-      = link_to '削除', board_task_path(@board, task),
-        data: { turbo_method: :delete, turbo_confirm: '本当に削除してもよろしいですか？' },
-        class: 'btn btn-outline-danger'
+        - if user_signed_in? && task.user == current_user
+          .dropdown{ data: { controller: "dropdown" } }
+            = image_tag 'actions.svg',
+              class: 'dropbtn',
+              alt: 'Actions',
+              data: { action: "click->dropdown#toggle", cardlink_ignore: true }
+            .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+              = link_to '編集',  edit_board_task_path(@board, task), data: { cardlink_ignore: true }
+              = link_to '削除',
+                board_task_path(@board, task),
+                method: :delete,
+                data: { turbo_confirm: '本当に削除してもよろしいですか？', cardlink_ignore: true }
 
-%h3#new-task タスクを追加
-= form_with model: [@board, @task], local: true do |f|
-  - if @task.errors.any?
-    %ul
-      - @task.errors.full_messages.each do |msg|
-        %li= msg
+      .task-card__content
+        = simple_format(task.content)
 
-  .form-group
-    = f.label :title, 'タイトル'
-    = f.text_field :title, class: 'form-control'
+      .task-card__deadline
+        - if task.deadline.present?
+          %span.deadline-label 期限:
+          %span= l(task.deadline, format: :long)
+        - else
+          %span.deadline-label 期限:
+          %span 未設定
 
-  .form-group
-    = f.label :content, '内容'
-    = f.text_area :content, class: 'form-control'
+      .task-card__meta
+        = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner', loading: 'lazy'
+        %span= task.user.profile&.nickname.presence || task.user.email.split('@').first
 
-  .form-group
-    = f.label :deadline, '期限'
-    = f.date_field :deadline, class: 'form-control'
+      - count = task.comments.size
+      .task-card__comments{ class: (count.zero? ? 'is-zero' : nil) }
+        = image_tag 'comment.svg', alt: 'Comments', width: 32, height: 32, loading: 'lazy'
+        %span= count
 
-  .form-group
-    = f.label :eyecatch, 'アイキャッチ画像'
-    = f.file_field :eyecatch, class: 'form-control'
 
-  = f.submit '作成', class: 'btn btn-primary'
+
+
+  / ▼ 新規投稿フォーム
+  %h3#new-task タスクを追加
+  .board-task-form
+    = form_with model: [@board, @task], local: true do |f|
+      - if @task.errors.any?
+        .alert.alert-danger
+          %ul
+            - @task.errors.full_messages.each do |msg|
+              %li= msg
+      .form-group
+        = f.label :title, 'タイトル'
+        = f.text_field :title, class: 'form-control'
+      .form-group
+        = f.label :content, '内容'
+        = f.text_area :content, class: 'form-control'
+      .form-group
+        = f.label :deadline, '期限'
+        = f.date_field :deadline, class: 'form-control'
+      .form-group
+        = f.label :eyecatch, '添付画像'
+        = f.file_field :eyecatch, class: 'form-control'
+      .form-actions
+        = f.submit '作成', class: 'btn btn-success mt-2'
+
+  .card-footer
+    = link_to 'Board一覧',
+      root_path,
+      class: 'btn-primary'
+
 
