@@ -1,6 +1,6 @@
 .authenticate-page
   .auth-title
-    Bord Todo App
+    Board Todo App
 
     / ===== 右上グローバルメニュー（タイトル帯の中に配置） =====
     .global-menu.dropdown{ data: { controller: "dropdown" } }
@@ -11,7 +11,7 @@
         data: { action: "click->dropdown#toggle" }
 
       .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
-        = link_to '新規作成', new_board_path
+        = link_to '新規ボード作成', new_board_path
         = link_to 'ボード一覧', boards_path
         = link_to 'プロフィール編集', edit_profile_path
         - unless user_signed_in?

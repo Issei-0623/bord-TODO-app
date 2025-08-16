@@ -1,11 +1,3 @@
-.container
-  %ul
-    - @comment.errors.full_messages.each do |message|
-      %li= message
-
-  = form_with(model: @comment, url: task_comments_path(@comment.task), local: true) do |f|
-    %div
-      = f.label :content, '内容'
-    %div
-      = f.text_area :content
-    = f.submit '保存', class: 'btn-primary'
+.authenticate-page-task
+  .auth-title-task コメント追加
+= render 'form'

@@ -1,0 +1,17 @@
+.authenticate-page-task
+  .task-detail-container
+    .comment-form-container
+      = form_with model: [@task, @comment], local: true,
+                  html: { class: 'comment-form' } do |f|
+        - if @comment.errors.any?
+          .alert.alert-danger
+            %ul
+              - @comment.errors.full_messages.each do |msg|
+                %li= msg
+
+        .form-group
+          = f.text_area :content, rows: 6, class: 'form-control'
+
+        .form-actions{ style: "margin-top: 12px; display:flex; gap:8px; justify-content:center;" }
+          = f.submit (@comment.new_record? ? '投稿' : '更新'), class: 'btn btn-primary'
+          = link_to 'キャンセル', board_task_path(@task.board, @task), class: 'btn btn-primary'
