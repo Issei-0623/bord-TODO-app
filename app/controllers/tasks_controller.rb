@@ -19,7 +19,7 @@ class TasksController < ApplicationController
   def show
     @board = Board.find(params[:board_id])
     @task  = @board.tasks.find(params[:id])
-    @comments = @task.comments.includes(:user).order(created_at: :desc)
+    @comments = @task.comments.order(created_at: :asc) 
   end
 
   # GET /boards/:board_id/tasks/:id/edit

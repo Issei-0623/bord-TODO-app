@@ -429,7 +429,184 @@
     color: #ddd;
 
     &:hover {
-      background-color: #e04c4c;
+      background-color: #da3535;
     }
   }
+}
+
+
+.task-detail-container {
+  width: 100%;
+  max-width: 1500px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #efefef;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.task-detail-header {
+  position: relative;
+  padding: 12px 44px 0 44px;
+}
+
+  .task-detail-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin: 0;
+  }
+
+  .task-detail-header .dropdown {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+}
+
+.task-detail-header .dropdown .dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 26px;
+}
+
+  .task-detail-content {
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  .task-detail-deadline {
+    margin-top: 1rem;
+
+    .deadline-label {
+      font-weight: bold;
+      margin-right: 0.3rem;
+    }
+  }
+
+  .task-detail-meta {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+    color: #555;
+  }
+
+
+.task-detail-comments{
+  width: 100%;
+  max-width: 1500px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.task-detail--comment-card{
+  background: #efefef;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 1500px;
+  margin-left: 0;
+  margin-right: 0;
+  position: relative;
+}
+
+.task-detail--comment-meta{
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .3rem;
+
+  .avatar{ width: 40px; height: 40px; border-radius: 50%; }
+  .nickname{ font-weight: 600; }
+  .timestamp{ margin-left: auto; font-size: .8rem; color: gray; }
+}
+
+/* コメントカード右上の三点メニュー配置 */
+.task-detail--comment-card .dropdown{
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.task-detail--comment-card .dropdown .dropdown-menu{
+  position: absolute;
+  right: 0;
+  top: 26px; /* アイコンの高さ分下げる */
+}
+
+  .nickname {
+    font-weight: bold;
+  }
+
+  .timestamp {
+    font-size: 0.8rem;
+    color: gray;
+    margin-left: auto;
+  }
+
+
+.task-detail--comment-content {
+  margin-left: 48px; // アバターと揃える
+}
+
+
+.task-detail-actions {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+}
+
+.task-detail-actions .dropbtn {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: block;
+}
+
+.btn-success {
+  border: none;
+  outline: none;
+}
+
+form .field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem; /* ラベルと次の要素の余白 */
+}
+
+
+.comment-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 横中央 */
+  justify-content: center; /* 縦中央（必要に応じて） */
+  width: 100%;
+}
+
+.comment-form {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.comment-form textarea.form-control {
+  width: 100% !important;
+  min-height: 140px;
+}
+
+.comment-form .form-actions .btn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.btn-primary,
+.btn-success {
+  border: none;
+  outline: none;
+  box-shadow: none; /* 黒い影も消す */
 }

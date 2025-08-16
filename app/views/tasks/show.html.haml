@@ -1,28 +1,72 @@
-%h2= @task.title
+.authenticate-page-task
+  .auth-title-task
+    タスク詳細
 
-%p= @task.content
-%p 投稿者: #{@task.user.email}
-%p 期限: #{@task.deadline}
-= image_tag current_user.avatar_image
+  .task-detail-container
+    .task-detail-header
+      %h2.task-detail-title= @task.title
+
+      - if user_signed_in? && @task.user == current_user
+        .dropdown{ data: { controller: "dropdown" } }
+          = image_tag 'actions.svg',
+            class: 'dropbtn',
+            alt: 'Actions',
+            data: { action: "click->dropdown#toggle", cardlink_ignore: true }
+          .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+            = link_to '編集',  edit_board_task_path(@board, @task), data: { cardlink_ignore: true }
+            = link_to '削除',
+              board_task_path(@board, @task),
+              method: :delete,
+              data: { turbo_confirm: '本当に削除してもよろしいですか？', cardlink_ignore: true }
+
+    .task-detail-content
+      = simple_format(@task.content)
+
+    .task-detail-deadline
+      - if @task.deadline.present?
+        %span.deadline-label 期限:
+        %span= l(@task.deadline, format: :long)
+      - else
+        %span.deadline-label 期限:
+        %span 未設定
+
+    .task-detail-meta
+      = image_tag @task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner'
+      %span= @task.user.profile&.nickname.presence || @task.user.email.split('@').first
 
 
-- if @task.eyecatch.attached?
-  = image_tag @task.eyecatch, class: 'task-eyecatch'
 
-.task_content
-  = @task.content
-.task_heart
-  = image_tag 'heart.svg'
-
-.container
-
-
-.task
+  .task-detail-comments
   %h3 コメント一覧
-  - @comments.each do |comment|
-    %p= comment.content
-    %p= "投稿者: #{comment.user.email}"
 
-= link_to 'コメントを追加', new_task_comment_path(@task)
+  - if @comments.present?
+    - @comments.each do |comment|
+      .task-detail--comment-card
+        .task-detail--comment-meta
+          = image_tag comment.user.avatar_url, class: 'avatar avatar--sm', alt: 'Comment user'
+          %span.nickname= comment.user.profile&.nickname.presence || comment.user.email.split('@').first
+          %div.timestamp= l(comment.created_at, format: :short)
 
-= link_to 'タスク一覧に戻る', board_path(@board), class: 'btn btn-secondary'
+          - if user_signed_in? && comment.user == current_user
+            .dropdown{ data: { controller: "dropdown" } }
+              = image_tag 'actions.svg',
+                class: 'dropbtn',
+                alt: 'Actions',
+                data: { action: "click->dropdown#toggle", cardlink_ignore: true }
+              .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+                = link_to '編集',  edit_task_comment_path(@task, comment), data: { cardlink_ignore: true }
+                = link_to '削除',
+                  task_comment_path(@task, comment),
+                  method: :delete,
+                  data: { turbo_confirm: '本当に削除しますか？', cardlink_ignore: true }
+
+
+        .task-detail--comment-content
+          = simple_format(comment.content)
+  - else
+    %p コメントはまだありません。
+
+  .comment-actions
+    = link_to 'コメント追加', new_task_comment_path(@task), class: 'btn btn-primary'
+    = link_to 'タスク一覧に戻る', board_path(@board), class: 'btn btn-primary'
+
