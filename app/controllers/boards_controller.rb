@@ -22,6 +22,10 @@ class BoardsController < ApplicationController
     @per_page    = per_page # ビューで再利用
   end
 
+  def index
+    @boards = Board.includes(:user, :tasks).order(created_at: :desc)
+  end
+
 
 # 新しいボードを作成する処理
 # @board は空のインスタンス
