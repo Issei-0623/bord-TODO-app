@@ -1,8 +1,25 @@
-%h1 ボード一覧
+.authenticate-page-task
+  .auth-title-task
+    ボード一覧
 
-- @boards.each do |board|
-  .board-card
-    %h3
-      = link_to board.title, board_path(board)
-    %p= board.content
-    %p 投稿者：= board.user.email
+.board-index-page
+  - @boards.each do |board|
+    .board-card
+      .board-card__head
+        %h3.board-card__title
+          = link_to board.title, board_path(board), class: 'board-link'
+      .board-card__body
+        %p.board-card__description= board.content.presence || '説明なし'
+
+      .board-card__meta
+        = image_tag board.user.avatar_url, class: 'avatar avatar--sm', alt: 'Board owner', loading: 'lazy'
+        %span.nickname= board.user.profile&.nickname.presence || board.user.email.split('@').first
+
+        - count = board.tasks.size
+        .board-card__tasks{ class: (count.zero? ? 'is-zero' : nil) }
+          = image_tag 'tasks.svg', alt: 'Tasks', width: 30, height: 30, loading: 'lazy'
+          %span= count
+
+.board-index-actions
+  = link_to 'ボード新規作成', new_board_path, class: 'btn btn-primary'
+  = link_to 'トップページに戻る', root_path, class: 'btn btn-primary'

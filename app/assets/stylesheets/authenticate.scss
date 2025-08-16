@@ -201,6 +201,7 @@
   height: 50px;
   cursor: pointer;
   display: block;
+  background-color: #fff;
 }
 
 
@@ -252,7 +253,7 @@
   align-items: center;
   gap: 4px;
   color: #777;
-  font-size: 12px;
+  font-size: 18px;
 }
 
 .task-card__comments.is-zero { display: none; }
@@ -614,4 +615,69 @@ form .field {
   border: none;
   outline: none;
   box-shadow: none; /* 黒い影も消す */
+}
+
+/* ▼ Board一覧ページ */
+.board-index-page {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.board-card {
+  background: #efefef;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 16px;
+  position: relative;
+}
+
+.board-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.board-link {
+  font-weight: 600;
+  text-decoration: none;
+  color: inherit;
+}
+
+.board-card__description {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.board-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #777;
+  font-size: 13px;
+}
+
+.board-card__tasks {
+  margin-left: auto;         /* 右端へ寄せる */
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 18px;
+  color: #777;
+}
+
+.board-card__tasks.is-zero {
+  display: none;
+}
+
+.board-index-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
 }
