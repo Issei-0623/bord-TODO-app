@@ -59,6 +59,11 @@ class TasksController < ApplicationController
     redirect_to board_task_path(@board, @task), alert: '権限がありません' unless @task.user == current_user
   end
 
+  def authorize_task_owner!
+    return if current_user == @task.user
+    redirect_to board_task_path(@board, @task), alert: 'このタスクを編集する権限がありません。'
+  end
+
   def task_params
     params.require(:task).permit(:title, :content, :deadline, :eyecatch)
   end
