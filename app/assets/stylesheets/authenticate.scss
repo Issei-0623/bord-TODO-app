@@ -393,6 +393,10 @@
   padding: 16px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  box-sizing: border-box;
 
   .form-group {
     margin-bottom: 12px;
@@ -417,6 +421,7 @@
     display: flex;
     justify-content: center;
     margin-top: 16px;
+    gap: 12px; 
   }
 
   .btn-success {

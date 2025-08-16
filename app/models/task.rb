@@ -28,10 +28,5 @@ class Task < ApplicationRecord
   validates :title, presence: true   # タイトルが必須
   validates :content, presence: true # コンテンツ（概要）が必須
 
-  def show
-    @board = Board.find(params[:board_id])
-    @task = @board.tasks.find(params[:id])
-    @comments = @task.comments.order(created_at: :asc)
-  end
 
 end

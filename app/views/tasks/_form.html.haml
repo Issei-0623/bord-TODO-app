@@ -1,0 +1,27 @@
+.board-task-form
+  = form_with model: [@board, @task], local: true do |f|
+    - if @task.errors.any?
+      .alert.alert-danger
+        %ul
+          - @task.errors.full_messages.each do |msg|
+            %li= msg
+
+    .form-group
+      = f.label :title, 'タイトル'
+      = f.text_field :title, class: 'form-control'
+
+    .form-group
+      = f.label :content, '内容'
+      = f.text_area :content, class: 'form-control'
+
+    .form-group
+      = f.label :deadline, '期限'
+      = f.date_field :deadline, class: 'form-control'
+
+    .form-group
+      = f.label :eyecatch, '添付画像'
+      = f.file_field :eyecatch, class: 'form-control'
+
+    .form-actions
+      = f.submit (local_assigns[:submit_label] || '作成'), class: 'btn btn-success'
+      = link_to 'キャンセル', (local_assigns[:cancel_path] || board_path(@board)), class: 'btn btn-primary'
