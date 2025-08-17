@@ -764,3 +764,123 @@ form .field {
   outline: none;
   box-shadow: none;
 }
+
+/* ▼ プロフィール（表示） */
+.profile-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+.profile-card {
+  background: #efefef;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.05);
+  padding: 1.5rem;
+}
+
+.profile-card__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .sub {
+    color: #777;
+    margin-top: 2px;
+  }
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-card__body {
+  margin-top: 12px;
+}
+
+.profile-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e8e8e8;
+
+  label {
+    color: #666;
+    font-weight: 600;
+  }
+
+  p, span {
+    color: #333;
+  }
+
+  &:last-child { border-bottom: none; }
+}
+
+.profile-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* ▼ プロフィール（編集） */
+.profile-form-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+.profile-form-card {
+  background: #efefef;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.05);
+  padding: 1.5rem;
+}
+
+.profile-form-card .form-group {
+  margin-bottom: 12px;
+
+  &.inline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    label { margin-bottom: 0; }
+  }
+}
+
+.profile-form-card label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.profile-form-card .form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.profile-form-card .form-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.profile-form-card .btn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
