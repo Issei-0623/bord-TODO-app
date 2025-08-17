@@ -1,15 +1,17 @@
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "form-wrapper" }) do |f|
-  .field-group
-    = f.label :email, class: 'input-label'
-    = f.email_field :email, class: 'input-box'
+= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-wrapper' }) do |f|
+  = render 'devise/shared/error_messages', resource: resource
 
   .field-group
-    = f.label :password, class: 'input-label'
-    = f.password_field :password, class: 'input-box'
+    = f.label :email, 'メール', class: 'input-label'
+    = f.email_field :email, autofocus: true, autocomplete: 'email', class: 'input-box'
 
   .field-group
-    = f.label :password_confirmation, class: 'input-label'
-    = f.password_field :password_confirmation, class: 'input-box'
+    = f.label :password, 'パスワード', class: 'input-label'
+    = f.password_field :password, autocomplete: 'new-password', class: 'input-box'
+
+  .field-group
+    = f.label :password_confirmation, 'パスワード（確認）', class: 'input-label'
+    = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'input-box'
 
   .actions
-    = f.submit "Submit", class: 'submit-button'
+    = f.submit 'Submit', class: 'submit-button'

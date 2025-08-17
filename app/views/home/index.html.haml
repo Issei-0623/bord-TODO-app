@@ -14,10 +14,12 @@
         = link_to 'ボード新規作成', new_board_path
         = link_to 'ボード一覧', boards_path
         = link_to 'プロフィールページ', profile_path
-        - unless user_signed_in?
-          = link_to 'ログイン / サインイン', users_auth_cards_path
+        - if user_signed_in?
+          = link_to 'ログアウト', destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'btn'
         - else
-          = link_to 'ログアウト', destroy_user_session_path, method: :delete
+          = link_to 'ログイン / サインイン', new_user_session_path, class: 'btn'
+
+
 
   .cards-container
     - @latest_boards.each do |board|
@@ -58,7 +60,8 @@
                   - if user_signed_in?
                     = link_to task.title, board_task_path(board, task), class: 'task-title'
                   - else
-                    = link_to task.title, users_auth_cards_path, class: 'task-title'
+                    = link_to task.title, new_user_session_path, class: 'task-title'
+
 
                   - if user_signed_in? && task.user == current_user
                     .dropdown{ data: { controller: "dropdown" } }
@@ -96,7 +99,7 @@
               data: { cardlink_ignore: true }
           - else
             = link_to 'ログインしてタスク追加',
-              users_auth_cards_path,
+              new_user_session_path,
               class: 'btn-primary',
               data: { cardlink_ignore: true }
 
