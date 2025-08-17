@@ -1,35 +1,40 @@
-.container
-  %ul
-    - @profile.errors.full_messages.each do |message|
-      %li= message
+.authenticate-page-task
+  .auth-title-task
+    プロフィール編集
 
-  = form_with(model: @profile, url: profile_path, method: 'put', local: true) do |f|
-    %div
-      = f.label :avatar, 'アバター'
-    %div
-      = f.file_field :avatar
-    %div
-      = f.label :nickname, 'ハンドルネーム'
-    %div
-      = f.text_field :nickname, class: 'text'
+.profile-form-container
+  .profile-form-card
+    = form_with model: @profile, url: profile_path, method: :put, local: true do |f|
+      - if @profile.errors.any?
+        .alert.alert-danger
+          %ul
+            - @profile.errors.full_messages.each do |msg|
+              %li= msg
 
-    %div
-      = f.label :introduction, '自己紹介'
-    %div
-      = f.text_area :introduction
+      .form-group
+        = f.label :avatar, 'アバター'
+        = f.file_field :avatar, class: 'form-control'
 
-    %div
-      = f.label :gender, '性別'
-    %div
-      = f.select :gender, Profile.genders.map { |k, _| [ I18n.t("enum.genders.#{k}"), k ] }, {}, { class: 'text' }
+      .form-group
+        = f.label :nickname, 'ハンドルネーム'
+        = f.text_field :nickname, class: 'form-control'
 
-    %div
-      = f.label :birthday, '生年月日'
-    %div
-      = f.date_field :birthday, class: 'text'
+      .form-group
+        = f.label :introduction, '自己紹介'
+        = f.text_area :introduction, class: 'form-control'
 
-    %div
-      = f.label :subscribed, '通知を受け取る'
-      = f.check_box :subscribed
+      .form-group
+        = f.label :gender, '性別'
+        = f.select :gender, Profile.genders.map { |k, _| [I18n.t("enum.genders.#{k}"), k] }, {}, class: 'form-control'
 
-    = f.submit '保存', class: 'btn-primary'
+      .form-group
+        = f.label :birthday, '生年月日'
+        = f.date_field :birthday, class: 'form-control'
+
+      .form-group.inline
+        = f.label :subscribed, '通知を受け取る'
+        = f.check_box :subscribed
+
+      .form-actions
+        = f.submit '保存', class: 'btn btn-primary'
+        = link_to 'キャンセル', root_path, class: 'btn btn-primary'

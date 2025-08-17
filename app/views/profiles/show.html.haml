@@ -1,15 +1,28 @@
-.container.profilePage
-  .profilePage_user
-    .profilePage_user_image
-      = image_tag current_user.avatar_image
+.authenticate-page-task
+  .auth-title-task
+    プロフィール
 
-    .profilePage_user_basicInfo
-      .profilePage_user_name
-        .profilePage_user_displayName
-          #{current_user.display_name}（#{current_user.age}・#{I18n.t("enum.genders.#{current_user.gender}")}）
+.profile-page
+  .profile-card
+    .profile-card__header
+      = image_tag current_user.avatar_url, class: 'profile-avatar', alt: 'Avatar', loading: 'lazy'
+      .profile-card__name
+        %h2= (current_user.profile&.nickname.presence || current_user.email.split('@').first)
+        - if current_user.respond_to?(:age) && current_user.respond_to?(:gender)
+          %p.sub= "#{current_user.age}歳・#{I18n.t("enum.genders.#{current_user.gender}") rescue ''}"
 
-      .profilePage_user_actionButton
-        = link_to '編集', edit_profile_path
+    .profile-card__body
+      - if current_user.profile&.introduction.present?
+        .profile-row
+          %label プロフィール
+          %p= simple_format(current_user.profile.introduction)
+      .profile-row
+        %label 生年月日
+        %span= (current_user.profile&.birthday ? l(current_user.profile.birthday) : '未設定')
+      .profile-row
+        %label 通知
+        %span= (current_user.profile&.subscribed ? '受け取る' : '受け取らない')
 
-    .profilePage_user_introduction
-      = current_user.introduction
+  .profile-actions
+    = link_to '編集', edit_profile_path, class: 'btn btn-primary'
+    = link_to 'トップページに戻る', root_path, class: 'btn btn-primary'
