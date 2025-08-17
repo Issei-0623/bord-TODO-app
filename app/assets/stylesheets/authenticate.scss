@@ -274,13 +274,25 @@
   }
 }
 
-
+/* 認証画面の共通レイアウト */
+.auth-page { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+.auth-grid { display: grid; grid-template-columns: repeat(2, minmax(280px,1fr)); gap: 24px; }
+.auth-card {
+  background: #f3f3f3; border-radius: 12px; padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.auth-card h3 { margin: 0 0 12px; font-size: 18px; }
+.field { display: grid; gap: 6px; margin: 12px 0; }
+.field.inline { display: flex; align-items: center; gap: 8px; }
+.actions { margin-top: 16px; }
+.btn-block { width: 100%; }
 
 @media (max-width: 899px) {
   .authenticate-page .cards-container {
     flex-direction: column;
     align-items: center;
   }
+  .auth-grid { grid-template-columns: 1fr; }
 }
 
 .board-head-link,
@@ -903,3 +915,11 @@ form .field {
     margin-top: 4px;
   }
 }
+
+/* --- Devise forms --- */
+.form-wrapper { width: 100%; }
+.field-group { margin-bottom: 12px; }
+.input-label { display: block; font-size: 14px; margin-bottom: 4px; color: #444; }
+.input-box { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+.submit-button { display: block; width: 100%; padding: 10px 14px; border-radius: 8px; background: #f25c5c; color: #fff; font-weight: 700; border: none; cursor: pointer; }
+.submit-button:hover { background: #da3535; }
