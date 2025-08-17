@@ -8,6 +8,21 @@
       .board-card__head
         %h3.board-card__title
           = link_to board.title, board_path(board), class: 'board-link'
+
+        -# ▼ 作成者だけに三点メニューを出す
+        - if user_signed_in? && board.user == current_user
+          .dropdown{ data: { controller: "dropdown" } }
+            = image_tag 'actions.svg',
+              class: 'dropbtn',
+              alt: 'Actions',
+              data: { action: "click->dropdown#toggle", cardlink_ignore: true }
+            .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+              = link_to '編集', edit_board_path(board), data: { cardlink_ignore: true }
+              = link_to '削除',
+                board_path(board),
+                method: :delete,
+                data: { turbo_confirm: '本当に削除してもよろしいですか？', cardlink_ignore: true }
+
       .board-card__body
         %p.board-card__description= board.content.presence || '説明なし'
 
