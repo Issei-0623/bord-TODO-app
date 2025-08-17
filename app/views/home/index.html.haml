@@ -13,7 +13,7 @@
       .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
         = link_to 'ボード新規作成', new_board_path
         = link_to 'ボード一覧', boards_path
-        = link_to 'プロフィール編集', edit_profile_path
+        = link_to 'プロフィールページ', profile_path
         - unless user_signed_in?
           = link_to 'ログイン / サインイン', users_auth_cards_path
         - else
