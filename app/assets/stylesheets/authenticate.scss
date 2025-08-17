@@ -681,3 +681,37 @@ form .field {
   gap: 12px;
   margin-top: 24px;
 }
+
+/* --- boards/index 用の微調整 --- */
+
+/* タイトル行を左右並び & 右上にメニューを固定 */
+.board-card { position: relative; }
+.board-card__head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 三点メニューの配置（カード右上） */
+.board-card .dropdown {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+}
+.board-card .dropdown .dropbtn {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  display: block;
+}
+/* 既存の .dropdown .dropdown-menu スタイルは使い回し。
+   ずれて見える場合は下の 26px を調整 */
+.board-card .dropdown .dropdown-menu { top: 26px; right: 0; }
+
+/* タスクの個数を少し大きく・読みやすく */
+.board-card__tasks span {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
