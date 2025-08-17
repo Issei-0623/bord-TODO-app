@@ -715,3 +715,52 @@ form .field {
   font-weight: 600;
   line-height: 1;
 }
+
+/* ▼ ボード新規/編集フォーム（コメント追加カードと同じ見た目） */
+.board-form-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 20px;
+}
+
+.board-form-card {
+  background: #efefef;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.05);
+  padding: 1.5rem;
+}
+
+.board-form-card .form-group {
+  margin-bottom: 12px;
+}
+
+.board-form-card label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.board-form-card .form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.board-form-card .form-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;     /* ボタン同士に少し余白 */
+}
+
+/* 既存のボタン設定に合わせて枠線/影を消す（他のページと統一） */
+.board-form-card .btn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}

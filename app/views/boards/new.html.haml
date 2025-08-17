@@ -1,18 +1,8 @@
-%h2 ボードを新規作成
+.authenticate-page-task
+  .auth-title-task
+    ボード新規作成
 
-= form_with model: @board, local: true do |f|
-  - if @board.errors.any?
-    #error_explanation
-      %ul
-        - @board.errors.full_messages.each do |msg|
-          %li= msg
-
-  .form-group
-    = f.label :title, 'タイトル'
-    = f.text_field :title
-
-  .form-group
-    = f.label :content, '概要'
-    = f.text_area :content
-
-  = f.submit '作成', class: 'btn btn-primary'
+  .board-form-container
+    = render 'form',
+        submit_label: '作成',
+        cancel_path: root_path
