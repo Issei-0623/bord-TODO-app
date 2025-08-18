@@ -1,21 +1,28 @@
 .auth-page
-  %h2.section-title ユーザー登録
-  .auth-grid
-    .auth-card
+  .auth-hero ユーザー登録
+
+  .auth-center
+    .auth-card.auth-card--wide
       %h3 新規アカウント作成
+
       = render "devise/shared/error_messages", resource: resource
+
       = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
         .field
-          = f.label :email, 'Eメール'
-          = f.email_field :email, autocomplete: "email", autofocus: true
+          = f.label :email, 'Eメール', class: 'input-label'
+          = f.email_field :email, autocomplete: "email", autofocus: true, class: 'input-box'
+
         .field
-          = f.label :password, 'パスワード'
+          = f.label :password, 'パスワード', class: 'input-label'
           %small (6 characters minimum)
-          = f.password_field :password, autocomplete: "new-password"
+          = f.password_field :password, autocomplete: "new-password", class: 'input-box'
+
         .field
-          = f.label :password_confirmation, 'パスワード（確認用）'
-          = f.password_field :password_confirmation, autocomplete: "new-password"
+          = f.label :password_confirmation, 'パスワード（確認用）', class: 'input-label'
+          = f.password_field :password_confirmation, autocomplete: "new-password", class: 'input-box'
+
         .actions
-          = f.submit "送信", class: "btn btn-primary btn-block"
-      .links
+          = f.submit "送信", class: "submit-button"
+
+      .devise-links
         = link_to "ログイン", new_session_path(resource_name)
