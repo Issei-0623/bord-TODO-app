@@ -11,6 +11,12 @@ module BordTodoApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    # 表示用のタイムゾーン（ビューや Time.current がこれになる）
+    config.time_zone = 'Asia/Tokyo'  # または 'Tokyo'
+
+    # DB への保存は UTC のままが安全（推奨）
+    config.active_record.default_timezone = :utc
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
