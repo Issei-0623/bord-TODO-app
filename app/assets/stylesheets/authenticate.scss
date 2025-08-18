@@ -274,14 +274,33 @@
   }
 }
 
-/* 認証画面の共通レイアウト */
-.auth-page { max-width: 960px; margin: 24px auto; padding: 0 16px; }
-.auth-grid { display: grid; grid-template-columns: repeat(2, minmax(280px,1fr)); gap: 24px; }
+
+/* コンテナ幅（ボードと同等） */
+.auth-page { max-width: 1200px; margin: 0 auto; padding: 0 16px 40px; }
+
+/* 赤いヘッダー帯（ボードの見出しと同トーン） */
+.auth-hero {
+  background: #ef6363; /* 既存ヘッダーに合わせた赤 */
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+  padding: 18px 12px;
+  border-radius: 6px;
+  margin: 16px 0 24px;
+}
+
+/* カード */
 .auth-card {
-  background: #f3f3f3; border-radius: 12px; padding: 20px;
+  background: #f3f3f3;
+  border-radius: 12px;
+  padding: 22px;
   box-shadow: 0 2px 8px rgba(0,0,0,.04);
 }
 .auth-card h3 { margin: 0 0 12px; font-size: 18px; }
+
+/* フォーム部品 */
 .field { display: grid; gap: 6px; margin: 12px 0; }
 .field.inline { display: flex; align-items: center; gap: 8px; }
 .actions { margin-top: 16px; }
@@ -292,7 +311,6 @@
     flex-direction: column;
     align-items: center;
   }
-  .auth-grid { grid-template-columns: 1fr; }
 }
 
 .board-head-link,
@@ -923,3 +941,78 @@ form .field {
 .input-box { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
 .submit-button { display: block; width: 100%; padding: 10px 14px; border-radius: 8px; background: #f25c5c; color: #fff; font-weight: 700; border: none; cursor: pointer; }
 .submit-button:hover { background: #da3535; }
+
+.auth-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+/* 上部の赤い帯（ボードのトーンに合わせる） */
+.auth-hero {
+  background: #f25c5c;
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1;
+  padding: 18px 12px;
+  border-radius: 6px;
+  margin: 16px 0 28px;
+}
+
+/* カードを中央に 1 枚だけ配置 */
+.auth-center {
+  display: flex;
+  justify-content: center;
+}
+
+/* 幅広カード（PC: 最大 720px / SP: 100%） */
+.auth-card {
+  background: #f3f3f3;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  padding: 28px 32px;
+}
+.auth-card--wide {
+  width: 100%;
+  max-width: 720px;
+}
+
+/* フォーム部品の見た目を統一（既存クラスに合わせて上書き） */
+.field { display: grid; gap: 8px; margin: 14px 0; }
+.field.inline { display: flex; align-items: center; gap: 8px; }
+
+.input-label { font-size: 14px; color: #444; }
+.input-box   { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+
+.actions {
+  margin-top: 18px;
+  display: flex; justify-content: center; gap: 12px;
+}
+
+/* ボタンは全幅・色は既存と同トーン */
+.submit-button {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #f25c5c;
+  color: #fff;
+  font-weight: 700;
+  border: none; outline: none; box-shadow: none;
+}
+.submit-button:hover { background: #da3535; }
+
+/* 下部リンクを横並びで綺麗に */
+.devise-links {
+  margin-top: 10px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* モバイル最適化 */
+@media (max-width: 767px) {
+  .auth-card--wide { max-width: 100%; }
+}
