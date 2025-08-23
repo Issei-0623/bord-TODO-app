@@ -425,6 +425,51 @@ form .field { display: flex; flex-direction: column; margin-bottom: 1rem; }
 
 .devise-links { margin-top: 10px; display: flex; gap: 16px; flex-wrap: wrap; }
 
+/* === Flash（フラッシュメッセージ） === */
+.flash-wrapper {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 9999;
+}
+
+/* 見た目とアニメーション */
+.flash {
+  min-width: 260px;
+  max-width: 80vw;
+  padding: 10px 14px;
+  border: 2px solid #000;  
+  border-radius: 8px;
+  color: #111;
+  box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .22s ease, transform .22s ease;
+}
+.flash.is-leaving {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.flash--notice { background: #efefef;}  /* 成功 */
+.flash--alert  { background: #fbff00 }  /* 警告/エラー */
+
+.flash__close {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  margin-left: 8px;
+  float: right;
+  opacity: .8;
+}
+.flash__close:hover { opacity: 1; }
+
 
 /* =========================================================
    Responsive（SP 最適化）
