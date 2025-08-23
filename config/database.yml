@@ -1,15 +1,16 @@
-# config/database.yml
-default: &default
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
-
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-
-test:
-  adapter: sqlite3
-  database: db/test.sqlite3
-
 production:
-  url: <%= ENV["DATABASE_URL"] %>
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  primary: &primary
+    url: <%= ENV["DATABASE_URL"] %>
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+
+  cache:
+    <<: *primary
+    migrations_paths: db/cache_migrate
+
+  queue:
+    <<: *primary
+    migrations_paths: db/queue_migrate
+
+  cable:
+    <<: *primary
+    migrations_paths: db/cable_migrate
