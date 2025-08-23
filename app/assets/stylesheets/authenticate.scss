@@ -1,17 +1,60 @@
+/* =========================================================
+   Header（タイトル中央・右上メニュー固定）
+   - タイトルは中央寄せ
+   - グローバルメニューはヘッダーの右上に固定
+   - 右側にメニューボタン分の余白を確保（padding-right）
+   ========================================================= */
 .auth-title {
   position: relative;
-  max-width: none;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100px;
   background-color: #f25c5c;
-  color: white;
-  text-align: center;
-  line-height: 100px;
+  color: #fff;
   font-size: 32px;
-  font-weight: bold;
-  margin: 0 auto 40px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0 0 40px;
+  padding: 0 96px; /* 右上ボタンが重ならないように余白確保 */
 }
 
+/* 右上メニューの実位置。ヘッダーの高さやボタンの見栄えとセットで調整 */
+.auth-title .global-menu.dropdown {
+  position: absolute !important;
+  top: 30px;   /* ヘッダー上端から合わせた値 */
+  right: 80px; /* 右端から合わせた値） */
+  transform: none;
+  margin: 0;
+  z-index: 20; /* ドロップダウンがカードより前面に来るように */
+}
+
+/* メニューアイコンのタップ領域を確保。数値はヘッダーとバランスで調整 */
+.auth-title .menu-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255,255,255,.18);
+  cursor: pointer;
+}
+.auth-title .menu-btn:hover { background: rgba(255,255,255,.28); }
+
+/* ドロップダウンはボタン直下に出す */
+.auth-title .dropdown-menu {
+  right: 0;
+  top: calc(100% + 8px);
+}
+
+
+/* =========================================================
+   Top page（ボード一覧のカード並び）
+   - JS の per_page 計算（カード幅 380px / gap 30px）とセットで維持
+   - .cards-container は nowrap：横スクロールさせずカラム数で制御
+   ========================================================= */
 .authenticate-page {
   display: flex;
   flex-direction: column;
@@ -25,9 +68,11 @@
     flex-wrap: nowrap;
     width: 100%;
     margin: 0 auto;
+    align-items: stretch; /* 各列のカード高さをそろえる */
   }
 }
 
+/* 1 カラムあたりのカード幅（→ per_page と相関） */
 .authenticate-card {
   width: 380px;
   min-height: 650px;
@@ -35,151 +80,86 @@
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   border: 1px solid rgba(0, 0, 0, 0.1);
-
-  h3 {
-    font-size: 14px;
-    color: gray;
-    margin-bottom: 4px;
-  }
-
-  .card-title {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
 }
-
 .authenticate-card:hover {
-  background-color: #d7d7d7; /* 薄いグレー */
-  transition: background-color 0.2s ease; /* 色変化をなめらかに */
+  background-color: #d7d7d7;
+  transition: background-color 0.2s ease;
 }
 
-.title-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.title-row { display: flex; align-items: center; gap: 8px; }
+.board-head {
+  display: flex; align-items: center; justify-content: space-between;
+  color: #333; font-size: 20px; font-weight: bold; margin: 2px 0 4px;
 }
+.board-label { letter-spacing: .2px; }
+.avatar--sm { width: 24px; height: 24px; }
+.board-title { font-weight: 600; }
 
-.board-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  color: #333;
-  font-size:20px;
-  font-weight: bold;
-  margin: 2px 0 4px;
-}
-.board-label{
-  letter-spacing:.2px;
-}
-.avatar--sm{ width:24px; height:24px; }
+/* =========================================================
+   Dropdown（共通パターン）
+   - Stimulus の dropdown#toggle と連動（.hidden を付け外し）
+   - z-index はヘッダー/カードより手前に出る値に
+   ========================================================= */
+.dropdown {
+  margin-left: auto;
+  position: relative;
 
-  .board-title { font-weight: 600; }
+  .dropbtn { width: 22px; height: 22px; cursor: pointer; display: block; }
 
-  .dropdown {
-    margin-left: auto;
-    position: relative;
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0; top: 26px;
+    min-width: 240px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    padding: 6px 0;
+    z-index: 20;
 
-    .dropbtn {
-      width: 22px;
-      height: 22px;
-      cursor: pointer;
+    a {
       display: block;
-    }
+      padding: 10px 14px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
 
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 26px;
-      min-width: 240px;
-      background: #fff;
-      border: 1px solid #eee;
-      border-radius: 10px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-      padding: 6px 0;
-      z-index: 20;
-
-      a {
-        display: block;
-        padding: 10px 14px;
-        text-decoration: none;
-        color: #333;
-        font-size: 14px;
-        &:hover { background: rgba(0, 221, 255, 0.3);}
-      }
-    }
-
-    .dropdown-menu:not(.hidden) {
-      display: block;
+      &:hover { background: rgba(0, 221, 255, 0.3); }
     }
   }
-
-
+  .dropdown-menu:not(.hidden) { display: block; }
+}
 .hidden { display: none !important; }
 
-.avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+/* Avatar（共通サイズ） */
+.avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
 
-.task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 2px;
-}
+/* タスク一覧（カード内の縦積み） */
+.task-list { display: flex; flex-direction: column; gap: 12px; margin-top: 2px; }
 
+/* コメント数を右下に常時表示するため、下余白を確保 */
 .task-card {
-  background: #fafafa;
+  background: #efefef;
   border: 1px solid #e5e5e5;
   border-radius: 12px;
   padding: 12px;
+  position: relative;
+  padding-bottom: 28px; /* コメント表示スペース */
 }
+.task-card__row { display: flex; align-items: center; justify-content: space-between; }
+.task-title { font-weight: 600; text-decoration: none; }
+.task-card__deadline { font-size: 0.85rem; color: #666; margin-top: 2px; }
+.deadline-label { font-weight: bold; margin-right: 2px; }
+.task-card__meta { display: flex; align-items: center; gap: 8px; margin-top: 8px; color: #777; font-size: 13px; }
 
-.task-card__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+.board-description { margin: 2px 0 6px; font-size: 14px; color: #333; line-height: 1.4; }
 
-.task-title {
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.task-card__deadline {
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 2px;
-}
-.deadline-label {
-  font-weight: bold;
-  margin-right: 2px;
-}
-
-.task-card__meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-  color: #777;
-  font-size: 13px;
-}
-
-.board-description {
-  margin: 2px 0 6px;
-  font-size: 14px;
-  color: #333;
-  line-height: 1.4;
-}
-
+/* フッターのボタンをカード最下部へ押し下げる */
 .card-footer {
   margin-top: auto;
   display: flex;
@@ -187,77 +167,10 @@
   padding-top: 12px;
 }
 
-/* 右上固定のグローバルメニュー */
-.global-menu {
-  position: absolute;
-  top: 50%;
-  right: 24px;
-  transform: translateY(-50%);
-  z-index: 2;
-}
+/* カード全体をリンクにする箇所（アクセシビリティ配慮で a にも付与） */
+.board-head-link, .task-empty-link { text-decoration: none; color: inherit; display: block; }
 
-.menu-btn {
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  display: block;
-  background-color: #fff;
-}
-
-
-
-
-/* 画面端に出るページ送り矢印 */
-.page-arrow {
-  position: fixed;            /* 画面端に固定 */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #555;
-  border: 1px solid #fff;
-  box-shadow: 0 4px 14px rgba(0,0,0,.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: #fff;
-  text-decoration: none;
-  z-index: 50;               /* カードより手前に */
-  transition: background-color 0.2s ease;
-}
-
-.page-arrow--left  { left: 16px; }
-.page-arrow--right { right: 16px; }
-
-.page-arrow:hover { background: #333; }
-
-
-/* タスクカードをコメント固定の基準にする */
-.task-card {
-  background: #efefef;
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
-  padding: 12px;
-  position: relative;
-  padding-bottom: 28px;
-}
-
-/* 右下固定のコメント表示 */
-.task-card__comments {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #777;
-  font-size: 18px;
-}
-
-.task-card__comments.is-zero { display: none; }
-
+/* タスクが無いときの空表示 */
 .task-empty {
   background: #efefef;
   border: 1px dashed #e0e0e0;
@@ -267,752 +180,260 @@
   color: #777;
   font-size: 14px;
 
-  .btn-sm {
-    margin-top: 8px;
-    padding: 6px 10px;
-    font-size: 13px;
-  }
+  .btn-sm { margin-top: 8px; padding: 6px 10px; font-size: 13px; }
 }
 
-
-/* コンテナ幅（ボードと同等） */
-.auth-page { max-width: 1200px; margin: 0 auto; padding: 0 16px 40px; }
-
-/* 赤いヘッダー帯（ボードの見出しと同トーン） */
-.auth-hero {
-  background: #ef6363; /* 既存ヘッダーに合わせた赤 */
-  color: #fff;
-  text-align: center;
-  font-weight: 700;
-  font-size: 22px;
-  line-height: 1;
-  padding: 18px 12px;
-  border-radius: 6px;
-  margin: 16px 0 24px;
+/* ページ送り（画面端に固定） */
+.page-arrow {
+  position: fixed;
+  top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #555; border: 1px solid #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: #fff; text-decoration: none;
+  z-index: 50;
+  transition: background-color 0.2s ease;
 }
+.page-arrow--left { left: 16px; }
+.page-arrow--right { right: 16px; }
+.page-arrow:hover { background: #333; }
 
-/* カード */
-.auth-card {
-  background: #f3f3f3;
-  border-radius: 12px;
-  padding: 22px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+/* コメント数は 0 のとき非表示 */
+.task-card__comments {
+  position: absolute; right: 12px; bottom: 10px;
+  display: flex; align-items: center; gap: 4px;
+  color: #777; font-size: 18px;
 }
-.auth-card h3 { margin: 0 0 12px; font-size: 18px; }
+.task-card__comments.is-zero { display: none; }
 
-/* フォーム部品 */
-.field { display: grid; gap: 6px; margin: 12px 0; }
-.field.inline { display: flex; align-items: center; gap: 8px; }
-.actions { margin-top: 16px; }
-.btn-block { width: 100%; }
-
+/* SP では 1 カラム表示に（JS の 899px ブレークポイントと合わせる） */
 @media (max-width: 899px) {
-  .authenticate-page .cards-container {
-    flex-direction: column;
-    align-items: center;
-  }
+  .authenticate-page .cards-container { flex-direction: column; align-items: center; }
 }
 
-.board-head-link,
-.task-empty-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
 
-/* ▼ Board詳細ページ専用：タスク一覧エリア */
+/* =========================================================
+   Board show（ボード詳細）
+   ========================================================= */
 .auth-title-task {
   position: relative;
-  max-width: none;
-  width: 100%;
-  height: 100px;
-  background-color: #f25c5c;
-  color: white;
-  text-align: center;
-  line-height: 100px;
-  font-size: 32px;
-  font-weight: bold;
-  // margin: 0 auto 40px;
+  width: 100%; height: 100px;
+  background-color: #f25c5c; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: bold;
 }
-
 .authenticate-page-task {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px;
+  display: flex; flex-direction: column; align-items: center; padding: 40px;
 }
 
 .board-show-page {
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  max-width: 1500px; margin: 0 auto; padding: 0 20px;
+  display: flex; flex-direction: column; gap: 32px;
 }
-
-/* ▼ Boardヘッダー */
 .board-header {
-  h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 4px;
-  }
-
-  .board-description {
-    font-size: 14px;
-    color: #666;
-  }
+  h2 { font-size: 24px; font-weight: bold; margin-bottom: 4px; }
+  .board-description { font-size: 14px; color: #666; }
 }
 
-/* ▼ タスクカード一覧（縦並び） */
-.board-task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ▼ タスクカード */
+.board-task-list { display: flex; flex-direction: column; gap: 20px; }
 .board-task-card {
-  background: #efefef;
-  padding: 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background: #efefef; padding: 16px; border: 1px solid #ddd;
+  border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
-
-/* ヘッダー行 */
-.board-task-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h4 {
-    font-size: 16px;
-    font-weight: bold;
-  }
+.board-task-header { display: flex; justify-content: space-between; align-items: center;
+  h4 { font-size: 16px; font-weight: bold; }
 }
+.board-task-actions { a { margin-left: 8px; } }
+.board-task-content { margin: 8px 0; font-size: 14px; }
+.board-task-meta { font-size: 12px; color: #888; }
+.board-task-eyecatch img.board-task-image { margin-top: 8px; max-width: 100%; height: auto; border-radius: 4px; }
 
-/* 編集・削除ボタン */
-.board-task-actions {
-  a {
-    margin-left: 8px;
-  }
-}
-
-/* 内容・メタ */
-.board-task-content {
-  margin: 8px 0;
-  font-size: 14px;
-}
-.board-task-meta {
-  font-size: 12px;
-  color: #888;
-}
-
-/* アイキャッチ画像 */
-.board-task-eyecatch img.board-task-image {
-  margin-top: 8px;
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
-}
-
-/* 投稿フォーム */
+/* 投稿フォーム（boards/show 内） */
 .board-task-form {
-  background: #efefef;
-  padding: 16px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 2rem auto;
-  box-sizing: border-box;
+  background: #efefef; padding: 16px; border: 1px solid #ddd; border-radius: 8px;
+  width: 100%; max-width: 1200px; margin: 2rem auto; box-sizing: border-box;
 
   .form-group {
     margin-bottom: 12px;
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background: #fff;
+    label { font-weight: bold; display: block; margin-bottom: 4px; }
+    input, textarea {
+      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: #fff;
     }
   }
-
-  .form-actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 16px;
-    gap: 12px; 
-  }
-
+  .form-actions { display: flex; justify-content: center; margin-top: 16px; gap: 12px; }
   .btn-success {
-    background-color: #f25c5c;
-    border-color: #f25c5c;
-    padding: 8px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 6px;
-    color: #ddd;
-
-    &:hover {
-      background-color: #da3535;
-    }
+    background-color: #f25c5c; border-color: #f25c5c;
+    padding: 8px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; color: #ddd;
+    &:hover { background-color: #da3535; }
   }
 }
 
 
+/* =========================================================
+   Task detail & Comments
+   ========================================================= */
 .task-detail-container {
-  width: 100%;
-  max-width: 1500px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background-color: #efefef;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  position: relative;
+  width: 100%; max-width: 1500px; margin: 2rem auto; padding: 1.5rem;
+  border: 1px solid #ddd; border-radius: 10px; background-color: #efefef;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); position: relative;
 }
-
-.task-detail-header {
-  position: relative;
-  padding: 12px 44px 0 44px;
+.task-detail-header { position: relative; padding: 12px 44px 0 44px; }
+.task-detail-title { font-size: 1.5rem; font-weight: bold; color: #333; text-align: center; margin: 0; }
+.task-detail-header .dropdown { position: absolute; top: 10px; right: 12px; }
+.task-detail-header .dropdown .dropdown-menu { position: absolute; right: 0; top: 26px; }
+.task-detail-content { margin-top: 1rem; line-height: 1.6; }
+.task-detail-deadline {
+  margin-top: 1rem;
+  .deadline-label { font-weight: bold; margin-right: 0.3rem; }
 }
+.task-detail-meta { display: flex; align-items: center; margin-top: 1rem; gap: 0.5rem; color: #555; }
 
-  .task-detail-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    margin: 0;
-  }
-
-  .task-detail-header .dropdown {
-  position: absolute;
-  top: 10px;
-  right: 12px;
+.task-detail-comments { width: 100%; max-width: 1500px; margin: 2rem auto; padding: 0 1.5rem; }
+.task-detail--comment-card {
+  background: #efefef; border: 1px solid #ddd; border-radius: 8px;
+  padding: 1rem; margin-bottom: 1rem; width: 100%; max-width: 1500px;
+  margin-left: 0; margin-right: 0; position: relative;
 }
-
-.task-detail-header .dropdown .dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 26px;
+.task-detail--comment-meta {
+  display: flex; align-items: center; gap: .5rem; margin-bottom: .3rem;
+  .avatar { width: 40px; height: 40px; border-radius: 50%; }
+  .nickname { font-weight: 600; }
+  .timestamp { margin-left: auto; font-size: .8rem; color: gray; }
 }
+/* コメントの三点メニュー位置 */
+.task-detail--comment-card .dropdown { position: absolute; top: 8px; right: 8px; }
+.task-detail--comment-card .dropdown .dropdown-menu { position: absolute; right: 0; top: 26px; }
 
-  .task-detail-content {
-    margin-top: 1rem;
-    line-height: 1.6;
-  }
+.nickname { font-weight: bold; }
+.timestamp { font-size: 0.8rem; color: gray; margin-left: auto; }
+.task-detail--comment-content { margin-left: 48px; } /* アバターの幅に合わせる */
 
-  .task-detail-deadline {
-    margin-top: 1rem;
+.task-detail-actions { position: absolute; top: 12px; right: 16px; }
+.task-detail-actions .dropbtn { width: 30px; height: 30px; cursor: pointer; display: block; }
 
-    .deadline-label {
-      font-weight: bold;
-      margin-right: 0.3rem;
-    }
-  }
-
-  .task-detail-meta {
-    display: flex;
-    align-items: center;
-    margin-top: 1rem;
-    gap: 0.5rem;
-    color: #555;
-  }
+.btn-success { border: none; outline: none; }
+form .field { display: flex; flex-direction: column; margin-bottom: 1rem; }
+.comment-form-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+.comment-form { width: 100%; max-width: 1200px; }
+.comment-form textarea.form-control { width: 100% !important; min-height: 140px; }
+.comment-form .form-actions .btn { font-size: 16px; border: none; outline: none; box-shadow: none; }
+.btn-primary, .btn-success { border: none; outline: none; box-shadow: none; }
 
 
-.task-detail-comments{
-  width: 100%;
-  max-width: 1500px;
-  margin: 2rem auto;
-  padding: 0 1.5rem;
-}
-
-.task-detail--comment-card{
-  background: #efefef;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  width: 100%;
-  max-width: 1500px;
-  margin-left: 0;
-  margin-right: 0;
-  position: relative;
-}
-
-.task-detail--comment-meta{
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  margin-bottom: .3rem;
-
-  .avatar{ width: 40px; height: 40px; border-radius: 50%; }
-  .nickname{ font-weight: 600; }
-  .timestamp{ margin-left: auto; font-size: .8rem; color: gray; }
-}
-
-/* コメントカード右上の三点メニュー配置 */
-.task-detail--comment-card .dropdown{
-  position: absolute;
-  top: 8px;
-  right: 8px;
-}
-.task-detail--comment-card .dropdown .dropdown-menu{
-  position: absolute;
-  right: 0;
-  top: 26px; /* アイコンの高さ分下げる */
-}
-
-  .nickname {
-    font-weight: bold;
-  }
-
-  .timestamp {
-    font-size: 0.8rem;
-    color: gray;
-    margin-left: auto;
-  }
-
-
-.task-detail--comment-content {
-  margin-left: 48px; // アバターと揃える
-}
-
-
-.task-detail-actions {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-}
-
-.task-detail-actions .dropbtn {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  display: block;
-}
-
-.btn-success {
-  border: none;
-  outline: none;
-}
-
-form .field {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem; /* ラベルと次の要素の余白 */
-}
-
-
-.comment-form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 横中央 */
-  justify-content: center; /* 縦中央（必要に応じて） */
-  width: 100%;
-}
-
-.comment-form {
-  width: 100%;
-  max-width: 1200px;
-}
-
-.comment-form textarea.form-control {
-  width: 100% !important;
-  min-height: 140px;
-}
-
-.comment-form .form-actions .btn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-
-.btn-primary,
-.btn-success {
-  border: none;
-  outline: none;
-  box-shadow: none; /* 黒い影も消す */
-}
-
-/* ▼ Board一覧ページ */
+/* =========================================================
+   Boards index & Board form
+   ========================================================= */
 .board-index-page {
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  max-width: 1500px; margin: 0 auto; padding: 0 20px;
+  display: flex; flex-direction: column; gap: 20px;
 }
+.board-card { background: #efefef; border: 1px solid #e5e5e5; border-radius: 12px; padding: 16px; position: relative; }
+.board-card__head { position: relative; display: flex; align-items: center; justify-content: space-between; }
+.board-link { font-weight: 600; text-decoration: none; color: inherit; }
+.board-card__description { margin: 8px 0; font-size: 14px; color: #333; line-height: 1.4; }
+.board-card__meta { display: flex; align-items: center; gap: 8px; color: #777; font-size: 13px; }
+.board-card__tasks { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 18px; color: #777; }
+.board-card__tasks.is-zero { display: none; }
+.board-index-actions { display: flex; justify-content: center; gap: 12px; margin-top: 24px; }
 
-.board-card {
-  background: #efefef;
-  border: 1px solid #e5e5e5;
-  border-radius: 12px;
-  padding: 16px;
-  position: relative;
-}
-
-.board-card__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.board-link {
-  font-weight: 600;
-  text-decoration: none;
-  color: inherit;
-}
-
-.board-card__description {
-  margin: 8px 0;
-  font-size: 14px;
-  color: #333;
-  line-height: 1.4;
-}
-
-.board-card__meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #777;
-  font-size: 13px;
-}
-
-.board-card__tasks {
-  margin-left: auto;         /* 右端へ寄せる */
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 18px;
-  color: #777;
-}
-
-.board-card__tasks.is-zero {
-  display: none;
-}
-
-.board-index-actions {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-/* --- boards/index 用の微調整 --- */
-
-/* タイトル行を左右並び & 右上にメニューを固定 */
-.board-card { position: relative; }
-.board-card__head {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* 三点メニューの配置（カード右上） */
-.board-card .dropdown {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-}
-.board-card .dropdown .dropbtn {
-  width: 22px;
-  height: 22px;
-  cursor: pointer;
-  display: block;
-}
-/* 既存の .dropdown .dropdown-menu スタイルは使い回し。
-   ずれて見える場合は下の 26px を調整 */
+/* ボードカード内の三点メニュー */
+.board-card .dropdown { position: absolute; top: 8px; right: 12px; }
+.board-card .dropdown .dropbtn { width: 22px; height: 22px; cursor: pointer; display: block; }
 .board-card .dropdown .dropdown-menu { top: 26px; right: 0; }
+.board-card__tasks span { font-size: 16px; font-weight: 600; line-height: 1; }
 
-/* タスクの個数を少し大きく・読みやすく */
-.board-card__tasks span {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1;
-}
-
-/* ▼ ボード新規/編集フォーム（コメント追加カードと同じ見た目） */
-.board-form-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 20px;
-}
-
+/* ボード新規/編集フォーム */
+.board-form-container { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
 .board-form-card {
-  background: #efefef;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,.05);
-  padding: 1.5rem;
+  background: #efefef; border: 1px solid #ddd; border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.05); padding: 1.5rem;
 }
+.board-form-card .form-group { margin-bottom: 12px; }
+.board-form-card label { font-weight: bold; display: block; margin-bottom: 4px; }
+.board-form-card .form-control { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: #fff; }
+.board-form-card .form-actions { margin-top: 12px; display: flex; justify-content: center; gap: 12px; }
+.board-form-card .btn { font-size: 16px; border: none; outline: none; box-shadow: none; }
 
-.board-form-card .form-group {
-  margin-bottom: 12px;
+
+/* =========================================================
+   Profile（表示・編集）
+   ========================================================= */
+.profile-page { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+.profile-card { background: #efefef; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,.05); padding: 1.5rem; }
+
+.profile-card__header { display: flex; align-items: center; gap: 16px;
+  .sub { color: #777; margin-top: 2px; }
 }
-
-.board-form-card label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.board-form-card .form-control {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: #fff;
-}
-
-.board-form-card .form-actions {
-  margin-top: 12px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;     /* ボタン同士に少し余白 */
-}
-
-/* 既存のボタン設定に合わせて枠線/影を消す（他のページと統一） */
-.board-form-card .btn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-
-/* ▼ プロフィール（表示） */
-.profile-page {
-  width: 100%;
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 20px;
-}
-
-.profile-card {
-  background: #efefef;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,.05);
-  padding: 1.5rem;
-}
-
-.profile-card__header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-
-  .sub {
-    color: #777;
-    margin-top: 2px;
-  }
-}
-
-.profile-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.profile-card__body {
-  margin-top: 12px;
-}
+.profile-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
+.profile-card__body { margin-top: 12px; }
 
 .profile-row {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 12px;
-  padding: 10px 0;
+  display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 10px 0;
   border-bottom: 1px solid #e8e8e8;
-
-  label {
-    color: #666;
-    font-weight: 600;
-  }
-
-  p, span {
-    color: #333;
-  }
-
+  label { color: #666; font-weight: 600; }
+  p, span { color: #333; }
   &:last-child { border-bottom: none; }
 }
+.profile-actions { margin-top: 16px; display: flex; gap: 12px; justify-content: center; }
 
-.profile-actions {
-  margin-top: 16px;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-/* ▼ プロフィール（編集） */
-.profile-form-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 20px;
-}
-
-.profile-form-card {
-  background: #efefef;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,.05);
-  padding: 1.5rem;
-}
-
+.profile-form-container { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+.profile-form-card { background: #efefef; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,.05); padding: 1.5rem; }
 .profile-form-card .form-group {
   margin-bottom: 12px;
-
-  &.inline {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    label { margin-bottom: 0; }
-  }
+  &.inline { display: flex; align-items: center; gap: 10px; label { margin-bottom: 0; } }
 }
-
-.profile-form-card label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.profile-form-card .form-control {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background: #fff;
-}
-
-.profile-form-card .form-actions {
-  margin-top: 12px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.profile-form-card .btn {
-  font-size: 16px;
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
+.profile-form-card label { font-weight: bold; display: block; margin-bottom: 4px; }
+.profile-form-card .form-control { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: #fff; }
+.profile-form-card .form-actions { margin-top: 12px; display: flex; justify-content: center; gap: 12px; }
+.profile-form-card .btn { font-size: 16px; border: none; outline: none; box-shadow: none; }
 
 .current-avatar {
   margin-bottom: 12px;
-
-  .hint {
-    font-size: 12px;
-    color: #777;
-    margin-top: 4px;
-  }
-
-  .profile-avatar {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-    margin-top: 4px;
-  }
+  .hint { font-size: 12px; color: #777; margin-top: 4px; }
+  .profile-avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; display: block; margin-top: 4px; }
 }
 
-/* --- Devise forms --- */
-.form-wrapper { width: 100%; }
-.field-group { margin-bottom: 12px; }
-.input-label { display: block; font-size: 14px; margin-bottom: 4px; color: #444; }
-.input-box { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
-.submit-button { display: block; width: 100%; padding: 10px 14px; border-radius: 8px; background: #f25c5c; color: #fff; font-weight: 700; border: none; cursor: pointer; }
-.submit-button:hover { background: #da3535; }
 
-.auth-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px 40px;
-}
-
-/* 上部の赤い帯（ボードのトーンに合わせる） */
+/* =========================================================
+   Devise（ログイン/登録など）
+   ========================================================= */
+.auth-page { max-width: 1200px; margin: 0 auto; padding: 0 24px 40px; }
 .auth-hero {
-  background: #f25c5c;
-  color: #fff;
-  text-align: center;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 1;
-  padding: 18px 12px;
-  border-radius: 6px;
-  margin: 16px 0 28px;
+  background: #f25c5c; color: #fff; text-align: center;
+  font-weight: 700; font-size: 24px; line-height: 1;
+  padding: 18px 12px; border-radius: 6px; margin: 16px 0 28px;
 }
+.auth-center { display: flex; justify-content: center; }
+.auth-card { background: #f3f3f3; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.05); padding: 28px 32px; }
+.auth-card--wide { width: 100%; max-width: 720px; }
 
-/* カードを中央に 1 枚だけ配置 */
-.auth-center {
-  display: flex;
-  justify-content: center;
-}
-
-/* 幅広カード（PC: 最大 720px / SP: 100%） */
-.auth-card {
-  background: #f3f3f3;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.05);
-  padding: 28px 32px;
-}
-.auth-card--wide {
-  width: 100%;
-  max-width: 720px;
-}
-
-/* フォーム部品の見た目を統一（既存クラスに合わせて上書き） */
+/* フォーム共通。各画面で使い回すためここに集約 */
 .field { display: grid; gap: 8px; margin: 14px 0; }
 .field.inline { display: flex; align-items: center; gap: 8px; }
-
 .input-label { font-size: 14px; color: #444; }
-.input-box   { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+.input-box { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+.actions { margin-top: 18px; display: flex; justify-content: center; gap: 12px; }
 
-.actions {
-  margin-top: 18px;
-  display: flex; justify-content: center; gap: 12px;
-}
-
-/* ボタンは全幅・色は既存と同トーン */
+/* 既存の .btn-primary/.btn-success に合わせ、枠・影は統一して無効化 */
 .submit-button {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 8px;
-  background: #f25c5c;
-  color: #fff;
-  font-weight: 700;
-  border: none; outline: none; box-shadow: none;
+  width: 100%; padding: 12px 14px; border-radius: 8px;
+  background: #f25c5c; color: #fff; font-weight: 700; border: none; outline: none; box-shadow: none;
+  &:hover { background: #da3535; }
 }
-.submit-button:hover { background: #da3535; }
+.btn-primary, .btn-success { border: none; outline: none; box-shadow: none; }
 
-/* 下部リンクを横並びで綺麗に */
-.devise-links {
-  margin-top: 10px;
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
+.devise-links { margin-top: 10px; display: flex; gap: 16px; flex-wrap: wrap; }
 
-/* モバイル最適化 */
-@media (max-width: 767px) {
+
+/* =========================================================
+   Responsive（SP 最適化）
+   - 高さ・文字サイズ・ボタンサイズを縮小
+   ========================================================= */
+@media (max-width: 768px) {
   .auth-card--wide { max-width: 100%; }
+
+  .auth-title { height: 84px; }
+  .auth-title__text { font-size: 26px; }
+  .menu-btn { width: 40px; height: 40px; }
 }
