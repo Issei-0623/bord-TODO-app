@@ -2,8 +2,11 @@
   .auth-title-task
     プロフィールページ
 
+-# プロフィールの表示用コンテナ
 .board-form-container
   .board-form-card
+
+    -# プロフィールのヘッダー（アバター・名前・年齢・性別）
     .profile-card_header
       = image_tag @profile.avatar_url,
                   class: 'profile-avatar',
@@ -16,6 +19,7 @@
       %h3= display_name
       %p= "#{age_text}歳・#{gender_text}"
 
+    -# メールや紹介文、生年月日の表示
     .profile-card_body
       .profile-row
         %label メール
@@ -31,6 +35,7 @@
         %span= @profile.birthday ? l(@profile.birthday) : '未設定'
 
     .profile-actions
+      -# ログインユーザー自身なら編集ボタンを表示
       - if user_signed_in? && current_user == @profile.user
         = link_to '編集', edit_profile_path, class: 'btn btn-primary'
       = link_to 'トップページに戻る', root_path, class: 'btn btn-primary'

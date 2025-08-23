@@ -2,7 +2,6 @@
   .auth-title-task
     タスク編集
 
-  = render 'form',
-      submit_label: '更新',
-      cancel_path: board_task_path(@board, @task)
-
+= render 'form',
+    submit_label: '更新',
+    cancel_path: board_task_path(@board, @task)

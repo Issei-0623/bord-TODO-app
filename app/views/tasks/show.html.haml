@@ -6,6 +6,7 @@
     .task-detail-header
       %h2.task-detail-title= @task.title
 
+      -# タスク投稿者本人なら編集・削除可能（ドロップダウン）
       - if user_signed_in? && @task.user == current_user
         .dropdown{ data: { controller: "dropdown" } }
           = image_tag 'actions.svg',
@@ -34,8 +35,6 @@
       = image_tag @task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner'
       %span= @task.user.profile&.nickname.presence || @task.user.email.split('@').first
 
-
-
   .task-detail-comments
   %h3 コメント一覧
 
@@ -47,6 +46,7 @@
           %span.nickname= comment.user.profile&.nickname.presence || comment.user.email.split('@').first
           %div.timestamp= l(comment.created_at, format: :short)
 
+          -# コメント投稿者自身なら編集・削除が可能
           - if user_signed_in? && comment.user == current_user
             .dropdown{ data: { controller: "dropdown" } }
               = image_tag 'actions.svg',
@@ -60,7 +60,6 @@
                   method: :delete,
                   data: { turbo_confirm: '本当に削除しますか？', cardlink_ignore: true }
 
-
         .task-detail--comment-content
           = simple_format(comment.content)
   - else
@@ -69,4 +68,3 @@
   .comment-actions
     = link_to 'コメント追加', new_task_comment_path(@task), class: 'btn btn-primary'
     = link_to 'タスク一覧に戻る', board_path(@board), class: 'btn btn-primary'
-
