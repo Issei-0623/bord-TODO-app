@@ -2,6 +2,7 @@
   .auth-title
     %h1.auth-title__text Board Todo App
 
+    -# ドロップダウンメニュー（ボード一覧、プロフィール、ログイン/ログアウト）
     .global-menu.dropdown{ data: { controller: "dropdown" } }
       = image_tag "menu.svg",
         class: "menu-btn",
@@ -17,10 +18,10 @@
         - else
           = link_to 'ログイン / 新規ユーザー登録', new_user_session_path, class: 'btn'
 
-
   .cards-container
+    -# 最新のボードを繰り返し表示
     - @latest_boards.each do |board|
-      / ============ カード全体クリックを有効化（内部操作は除外） ============
+      -# カード全体をクリック可能にする（Stimulus Controller: cardlink）
       .authenticate-card{
         data: {
           controller: "cardlink",
@@ -31,7 +32,7 @@
         tabindex: 0
       }
 
-        / ===== 見出し（クリック範囲は a にも付ける：アクセシビリティ用） =====
+        -# ボード見出し（タイトル + ユーザーアバター）
         = link_to board_path(board), class: 'board-head-link', data: { cardlink_ignore: true } do
           .board-head
             %span.board-label= board.title
@@ -40,11 +41,10 @@
               alt: 'Board owner',
               loading: 'lazy', width: 24, height: 24
 
-        / ===== ボード概要 =====
+        -# ボードの説明
         - if board.content.present?
           .board-description= board.content
 
-        / ===== タスク一覧 =====
         .task-list
           - if board.tasks.empty?
             = link_to board_path(board), class: 'task-empty-link', data: { cardlink_ignore: true } do
@@ -54,12 +54,13 @@
             - board.tasks.order(created_at: :desc).each do |task|
               .task-card
                 .task-card__row
+                  -# タスクタイトル（ログイン済みなら詳細へ、未ログインならログイン画面へ）
                   - if user_signed_in?
                     = link_to task.title, board_task_path(board, task), class: 'task-title'
                   - else
                     = link_to task.title, new_user_session_path, class: 'task-title'
 
-
+                  -# 自分が作成したタスクなら、編集・削除ボタンを表示
                   - if user_signed_in? && task.user == current_user
                     .dropdown{ data: { controller: "dropdown" } }
                       = image_tag 'actions.svg',
@@ -73,21 +74,24 @@
                           method: :delete,
                           data: { turbo_confirm: '本当に削除しますか？', cardlink_ignore: true }
 
+                -# 期限が設定されている場合は表示
                 .task-card__deadline
                   - if task.deadline.present?
                     %span.deadline-label 期限:
                     %span= l(task.deadline, format: :long)
 
+                -# タスク作成者のアバター + 表示名（ニックネーム or メール）
                 .task-card__meta
                   = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner', loading: 'lazy'
                   %span= task.user.profile&.nickname.presence || task.user.email
 
+                -# コメント数を表示（0件のときは`is-zero`クラス付与）
                 - count = task.comments.size
                 .task-card__comments{ class: (count.zero? ? 'is-zero' : nil) }
                   = image_tag 'comment.svg', alt: 'Comments', width: 16, height: 16, loading: 'lazy'
                   %span= count
 
-        / ===== フッター：+タスク追加（カード遷移はさせない） =====
+        -# カード下部：+タスク追加ボタン（ログインしていれば表示）
         .card-footer
           - if user_signed_in?
             = link_to '+ タスク追加',
@@ -100,8 +104,11 @@
               class: 'btn-primary',
               data: { cardlink_ignore: true }
 
-  / ===== 画面端のページ送り（必要なら表示） =====
+  -# ページ送り（前へ）
   - if @page > 1
     = link_to '‹', root_path(page: @page - 1, per_page: @per_page), class: 'page-arrow page-arrow--left', aria_label: '前へ'
+
+  -# ページ送り（次へ）
   - if @page < @total_pages
     = link_to '›', root_path(page: @page + 1, per_page: @per_page), class: 'page-arrow page-arrow--right', aria_label: '次へ'
+

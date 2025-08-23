@@ -1,3 +1,6 @@
+-# =========================================================
+-#  ボード詳細 + タスク一覧 + タスク新規フォーム
+-# =========================================================
 .authenticate-page-task
   .auth-title-task
     タスク一覧
@@ -9,50 +12,51 @@
     %h2= @board.title
     %p.board-description= @board.content
 
-  / ▼ タスク一覧
+  / ▼ タスク一覧（最新順）
   .board-task-list
-  - @tasks.each do |task|
-    .task-card
-      .task-card__row
-        = link_to task.title, board_task_path(@board, task), class: 'task-title'
+    - @tasks.each do |task|
+      .task-card
+        .task-card__row
+          = link_to task.title, board_task_path(@board, task), class: 'task-title'
 
-        - if user_signed_in? && task.user == current_user
-          .dropdown{ data: { controller: "dropdown" } }
-            = image_tag 'actions.svg',
-              class: 'dropbtn',
-              alt: 'Actions',
-              data: { action: "click->dropdown#toggle", cardlink_ignore: true }
-            .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
-              = link_to '編集',  edit_board_task_path(@board, task), data: { cardlink_ignore: true }
-              = link_to '削除',
-                board_task_path(@board, task),
-                method: :delete,
-                data: { turbo_confirm: '本当に削除してもよろしいですか？', cardlink_ignore: true }
+          -# オーナーのみ操作メニューを表示
+          - if user_signed_in? && task.user == current_user
+            .dropdown{ data: { controller: "dropdown" } }
+              = image_tag 'actions.svg',
+                class: 'dropbtn',
+                alt: 'Actions',
+                data: { action: "click->dropdown#toggle", cardlink_ignore: true }
+              .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+                = link_to '編集',  edit_board_task_path(@board, task), data: { cardlink_ignore: true }
+                = link_to '削除',
+                  board_task_path(@board, task),
+                  method: :delete,
+                  data: { turbo_confirm: '本当に削除してもよろしいですか？', cardlink_ignore: true }
 
-      .task-card__content
-        = simple_format(task.content)
+        .task-card__content
+          = simple_format(task.content)
 
-      .task-card__deadline
-        - if task.deadline.present?
-          %span.deadline-label 期限:
-          %span= l(task.deadline, format: :long)
-        - else
-          %span.deadline-label 期限:
-          %span 未設定
+        .task-card__deadline
+          - if task.deadline.present?
+            %span.deadline-label 期限:
+            %span= l(task.deadline, format: :long)
+          - else
+            %span.deadline-label 期限:
+            %span 未設定
 
-      .task-card__meta
-        = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner', loading: 'lazy'
-        %span= task.user.profile&.nickname.presence || task.user.email.split('@').first
+        .task-card__meta
+          -# アバターは nil 対応。avatar_url を使う実装の場合は適宜ヘルパー化推奨
+          - if task.user&.respond_to?(:avatar_url) && task.user.avatar_url.present?
+            = image_tag task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner', loading: 'lazy'
+          %span= task.user&.profile&.nickname.presence || task.user&.email&.split('@')&.first
 
-      - count = task.comments.size
-      .task-card__comments{ class: (count.zero? ? 'is-zero' : nil) }
-        = image_tag 'comment.svg', alt: 'Comments', width: 32, height: 32, loading: 'lazy'
-        %span= count
+        -# コメント数表示（0のときは .is-zero で非表示）
+        - count = task.comments.size
+        .task-card__comments{ class: (count.zero? ? 'is-zero' : nil) }
+          = image_tag 'comment.svg', alt: 'Comments', width: 32, height: 32, loading: 'lazy'
+          %span= count
 
-
-
-
-  / ▼ 新規投稿フォーム
+  / ▼ 新規投稿フォーム（このページ内でタスクを追加）
   %h3#new-task タスクを追加
   .board-task-form
     = form_with model: [@board, @task], local: true do |f|
@@ -61,24 +65,26 @@
           %ul
             - @task.errors.full_messages.each do |msg|
               %li= msg
+
       .form-group
         = f.label :title, 'タイトル'
         = f.text_field :title, class: 'form-control'
+
       .form-group
         = f.label :content, '内容'
         = f.text_area :content, class: 'form-control'
+
       .form-group
         = f.label :deadline, '期限'
         = f.date_field :deadline, class: 'form-control'
+
       .form-group
         = f.label :eyecatch, '添付画像'
         = f.file_field :eyecatch, class: 'form-control'
+        -# form_with は file_field があると自動で multipart になります
+
       .form-actions
         = f.submit '作成', class: 'btn btn-success mt-2'
 
   .card-footer
-    = link_to 'トップページに戻る',
-      root_path,
-      class: 'btn-primary'
-
-
+    = link_to 'トップページに戻る', root_path, class: 'btn-primary'

@@ -1,5 +1,8 @@
+-# タスクの作成・編集フォーム（共通パーシャル）
 .board-task-form
   = form_with model: [@board, @task], local: true do |f|
+
+    -# バリデーションエラーを表示
     - if @task.errors.any?
       .alert.alert-danger
         %ul
