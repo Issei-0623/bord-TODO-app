@@ -40,6 +40,8 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+gem "aws-sdk-s3", require: false
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
@@ -58,6 +60,7 @@ group :development, :test do
   gem "pry-rescue"
   gem "pry-stack_explorer"
   gem "rubocop-rails"
+  gem "dotenv-rails"
 
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]

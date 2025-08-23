@@ -6,10 +6,17 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+if ['development', 'test'].include? ENV['RAILS_ENV']
+  Dotenv::Railtie.load
+end
+
 module BordTodoApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
+
+    Bundler.require(*Rails.groups)
+    Dotenv::Railtie.load
 
     # 表示用のタイムゾーン（ビューや Time.current がこれになる）
     config.time_zone = 'Asia/Tokyo'  # または 'Tokyo'
