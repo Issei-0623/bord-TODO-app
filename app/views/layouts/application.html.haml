@@ -1,21 +1,32 @@
-!!!
+!!! 
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{"http-equiv" => "Content-Type", content: "text/html; charset=UTF-8"}/
     %title= content_for(:title) || "Bord Todo App"
-    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
-    %meta{:content => "yes", :name => "apple-mobile-web-app-capable"}/
-    %meta{:content => "yes", :name => "mobile-web-app-capable"}/
+    %meta{name: "viewport", content: "width=device-width,initial-scale=1"}/
+    %meta{name: "apple-mobile-web-app-capable", content: "yes"}/
+    %meta{name: "mobile-web-app-capable", content: "yes"}/
     = csrf_meta_tags
     = csp_meta_tag
     = yield :head
-    %link{:href => "/icon.png", :rel => "icon", :type => "image/png"}/
-    %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
-    %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
+    %link{rel: "icon", type: "image/png", href: "/icon.png"}/
+    %link{rel: "icon", type: "image/svg+xml", href: "/icon.svg"}/
+    %link{rel: "apple-touch-icon", href: "/icon.png"}/
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
+
   %body
+    / ===== Flash（右上に出して4秒で自動消去。0なら自動消去なし）=====
+    - if flash.present?
+      .flash-wrapper
+        - flash.each do |type, message|
+          - next if message.blank?
+          - klass = { 'notice' => 'flash flash--notice',
+                      'alert'  => 'flash flash--alert',
+                      'error'  => 'flash flash--alert' }[type.to_s] || 'flash'
+          %div{ class: klass, data: { controller: 'flash', flash_timeout_value: 4000 } }
+            .flash__body= message
+            %button.flash__close{ type: "button", data: { action: "click->flash#close" } } ×
+
     = yield
 
-%p.notice= notice
-%p.alert= alert
