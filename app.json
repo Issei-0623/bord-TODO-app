@@ -1,0 +1,16 @@
+{
+  "name": "Board Todo App",
+  "description": "This is Board Todo App",
+  "keywords": [],
+  "website": "",
+  "repository": "https://github.com/Issei-0623/bord-TODO-app",
+  "env": {},
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ],
+  "buildpacks": [{
+    "url": "heroku/nodejs"
+  }, {
+    "url": "heroku/ruby"
+  }]
+}
