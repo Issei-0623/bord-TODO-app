@@ -23,6 +23,10 @@
     .task-detail-content
       = simple_format(@task.content)
 
+    - if @task.eyecatch.attached?
+      .task-detail-eyecatch
+        = image_tag url_for(@task.eyecatch), class: 'task-eyecatch'
+
     .task-detail-deadline
       - if @task.deadline.present?
         %span.deadline-label 期限:
