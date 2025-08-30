@@ -17,7 +17,7 @@ class Profile < ApplicationRecord
 
   def avatar_url
     if avatar.attached?
-      rails_blob_url(avatar, only_path: true)
+      rails_blob_url(avatar, host: Rails.application.routes.default_url_options[:host])
     elsif user.respond_to?(:avatar_url) && user.avatar_url.present?
       user.avatar_url
     else
