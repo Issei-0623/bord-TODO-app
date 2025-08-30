@@ -15,6 +15,10 @@ module BordTodoApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
 
+    # デフォルトロケールを日本語に設定（全環境で有効）
+    config.i18n.default_locale = :ja
+    config.i18n.available_locales = [:en, :ja]
+
     if Rails.env.development? || Rails.env.test?
       Bundler.require(*Rails.groups)
       Dotenv::Railtie.load
@@ -37,7 +41,6 @@ module BordTodoApp
       #
       # config.time_zone = "Central Time (US & Canada)"
       # config.eager_load_paths << Rails.root.join("extras")
-      config.i18n.default_locale = :ja
     end
   end
 end
