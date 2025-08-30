@@ -1,3 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+
+development:
+  <<: *default
+  database: bord_todo_app_development
+
+test:
+  <<: *default
+  database: bord_todo_app_test
+
 production:
   primary: &primary
     url: <%= ENV["DATABASE_URL"] %>
