@@ -19,15 +19,15 @@ module BordTodoApp
     config.i18n.default_locale = :ja
     config.i18n.available_locales = [:en, :ja]
 
+    # 本番環境でも日本時間を使用
+    # 表示用のタイムゾーン（ビューや Time.current がこれになる）
+    config.time_zone = 'Asia/Tokyo'  # または 'Tokyo'
+    # DB への保存は UTC のままが安全（推奨）
+    config.active_record.default_timezone = :utc
+
     if Rails.env.development? || Rails.env.test?
       Bundler.require(*Rails.groups)
       Dotenv::Railtie.load
-
-      # 表示用のタイムゾーン（ビューや Time.current がこれになる）
-      config.time_zone = 'Asia/Tokyo'  # または 'Tokyo'
-
-      # DB への保存は UTC のままが安全（推奨）
-      config.active_record.default_timezone = :utc
 
       # Please, add to the `ignore` list any other `lib` subdirectories that do
       # not contain `.rb` files, or that should not be reloaded or eager loaded.
