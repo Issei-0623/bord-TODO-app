@@ -479,9 +479,103 @@ form .field { display: flex; flex-direction: column; margin-bottom: 1rem; }
    - 高さ・文字サイズ・ボタンサイズを縮小
    ========================================================= */
 @media (max-width: 768px) {
-  .auth-card--wide { max-width: 100%; }
+  /* ヘッダー調整 */
+  .auth-title {
+    height: 70px;
+    font-size: 18px;
+    padding: 0 48px;
+  }
 
-  .auth-title { height: 84px; }
-  .auth-title__text { font-size: 26px; }
-  .menu-btn { width: 40px; height: 40px; }
+  .auth-title__text {
+    font-size: 20px;
+  }
+
+  .auth-title .global-menu.dropdown {
+    top: 20px;
+    right: 16px;
+  }
+
+  .auth-title .menu-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* カード */
+  .authenticate-page .cards-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .authenticate-card {
+    width: 100%;
+    max-width: 95%;
+    min-height: auto;
+    padding: 16px;
+  }
+
+  /* ボード新規/編集フォーム */
+  .board-form-container {
+    width: 100%;
+    max-width: 95%;
+    margin: 1.5rem auto 0;
+    padding: 0 12px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .board-form-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  /* ===== フォームのボタンを縦並びにして幅を揃える ===== */
+  .board-form-card .form-actions,
+  .comment-form .form-actions,
+  .profile-form-card .form-actions {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .board-form-card .btn,
+  .comment-form .btn,
+  .profile-form-card .btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px 0;
+  }
+
+  /* ===== タスク詳細カードの上の余白 ===== */
+  .task-detail-container {
+    width: 90%;
+    margin: 1.5rem auto;
+    padding: 16px;
+  }
+
+  /* ===== コメントボタンエリア ===== */
+  .comment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .comment-actions .btn {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    padding: 12px 0;
+  }
+
+  /* ===== プロフィールページの文字サイズを少し小さく ===== */
+  .profile-row label,
+  .profile-row p,
+  .profile-row span {
+    font-size: 14px;
+  }
 }
