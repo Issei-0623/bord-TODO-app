@@ -51,7 +51,7 @@
               .task-empty
                 %p まだタスクがありません
           - else
-            - board.tasks.order(created_at: :desc).each do |task|
+            - board.tasks.order(Arel.sql("CASE WHEN deadline IS NULL THEN 1 ELSE 0 END, deadline ASC")).each do |task|
               .task-card
                 .task-card__row
                   -# タスクタイトル（ログイン済みなら詳細へ、未ログインならログイン画面へ）
