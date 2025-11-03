@@ -38,7 +38,7 @@ class User < ApplicationRecord
     elsif profile&.avatar&.attached?
       profile.avatar.variant(resize_to_fill: size).processed
     else
-      'default-avatar.png' # /assets/ は付けない（Propshaft）
+      'default-avatar.png'
     end
   end
 end
