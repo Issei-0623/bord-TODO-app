@@ -13,7 +13,7 @@ class BoardsController < ApplicationController
   # - includes: Board作者(User)とそのアバター、Task と Task作者/コメントを先読み
   def index
     per_page = params[:per_page].presence&.to_i
-    per_page = 5 if per_page.nil? || per_page <= 0 # デフォルト 5
+    per_page = Board.count if per_page.nil? || per_page <= 0
 
     @page = params[:page].to_i
     @page = 1 if @page < 1
