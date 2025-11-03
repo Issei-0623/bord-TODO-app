@@ -69,8 +69,7 @@ class BoardsController < ApplicationController
   # 一覧とは別に、単一ボードのタスク一覧を表示
   def show
     @board = Board.find(params[:id])
-    # タスク作者情報も一緒に読み込んで N+1 を抑える
-    @tasks = @board.tasks.includes(:user).order(created_at: :desc)
+    @tasks = @board.tasks.includes(:user).order(Arel.sql("CASE WHEN deadline IS NULL THEN 1 ELSE 0 END, deadline ASC"))
     @task  = Task.new # boards/show 内の「タスク追加フォーム」用
   end
 
