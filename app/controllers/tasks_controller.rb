@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # 作成者本人しか編集・更新・削除できないようガード
-  before_action :authorize_owner!, only: [:edit, :update, :destroy]
+  before_action :authorize_owner!, only: [:edit, :update]
 
   # 親ボード配下に current_user のタスクを作成
   def create

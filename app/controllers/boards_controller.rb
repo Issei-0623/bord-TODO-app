@@ -4,7 +4,7 @@ class BoardsController < ApplicationController
   # 編集・更新・削除の直前で対象レコードを取得
   before_action :set_board,    only: [:edit, :update, :destroy]
   # 作成者本人だけが編集・削除できるように制御
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update]
 
   # --- 一覧 ---
   # ページング＋N+1回避のための includes を使う版だけを残す

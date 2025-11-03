@@ -60,8 +60,8 @@
                   - else
                     = link_to task.title, new_user_session_path, class: 'task-title'
 
-                  -# 自分が作成したタスクなら、編集・削除ボタンを表示
-                  - if user_signed_in? && task.user == current_user
+                  -# 編集・削除ボタンを表示
+                  - if user_signed_in?
                     .dropdown{ data: { controller: "dropdown" } }
                       = image_tag 'actions.svg',
                         class: 'dropbtn',
