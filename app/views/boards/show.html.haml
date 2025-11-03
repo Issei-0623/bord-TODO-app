@@ -39,7 +39,10 @@
         .task-card__deadline
           - if task.deadline.present?
             %span.deadline-label 期限:
-            %span= l(task.deadline, format: :long)
+            - if task.deadline < Date.today
+              %span.deadline-overdue= l(task.deadline, format: :long)
+            - else
+              %span= l(task.deadline, format: :long)
           - else
             %span.deadline-label 期限:
             %span 未設定
