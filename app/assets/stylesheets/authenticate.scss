@@ -142,6 +142,20 @@
 /* タスク一覧（カード内の縦積み） */
 .task-list { display: flex; flex-direction: column; gap: 12px; margin-top: 2px; }
 
+/* === タスク優先度の色分け === */
+.priority-high {
+  background-color: #ffe5e5 !important;  /* 薄い赤 */
+}
+.priority-medium {
+  background-color: #fff8e1 !important;  /* 薄い黄色 */
+}
+.priority-low {
+  background-color: #e8f5e9 !important;  /* 薄い緑 */
+}
+.priority-none {
+  background-color: #efefef !important;  /* デフォルト */
+}
+
 /* コメント数を右下に常時表示するため、下余白を確保 */
 .task-card {
   background: #efefef;

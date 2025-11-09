@@ -6,7 +6,7 @@
     .task-detail-header
       %h2.task-detail-title= @task.title
 
-      -# タスク投稿者本人なら編集・削除可能（ドロップダウン）
+      -# タスク投稿者本人関係無しに編集・削除可能（ドロップダウン）
       - if user_signed_in?
         .dropdown{ data: { controller: "dropdown" } }
           = image_tag 'actions.svg',

@@ -15,7 +15,7 @@
   / ▼ タスク一覧（最新順）
   .board-task-list
     - @tasks.each do |task|
-      .task-card
+      .task-card{ class: "priority-#{task.priority.presence || 'none'}" }
         .task-card__row
           = link_to task.title, board_task_path(@board, task), class: 'task-title'
 
