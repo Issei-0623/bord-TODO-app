@@ -80,6 +80,8 @@
                     %span.deadline-label 期限:
                     - if task.deadline < Date.today
                       %span.deadline-overdue= l(task.deadline, format: :long)
+                    - elsif task.deadline == Date.today
+                      %span.deadline-today= l(task.deadline, format: :long)
                     - else
                       %span= l(task.deadline, format: :long)
 
