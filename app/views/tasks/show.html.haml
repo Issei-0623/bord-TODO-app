@@ -2,7 +2,7 @@
   .auth-title-task
     タスク詳細
 
-  .task-detail-container
+  .task-detail-container{ class: "priority-#{@task.priority.presence || 'none'}" }
     .task-detail-header
       %h2.task-detail-title= @task.title
 
