@@ -10,6 +10,7 @@
 #  board_id   :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  priority   :string
 #
 # Indexes
 #
@@ -27,6 +28,6 @@ class Task < ApplicationRecord
 
   validates :title, presence: true   # タイトルが必須
   validates :content, presence: true # コンテンツ（概要）が必須
-
+  validates :priority, inclusion: { in: %w[high medium low], allow_blank: true }
 
 end

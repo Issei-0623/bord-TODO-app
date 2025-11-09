@@ -69,6 +69,6 @@ class TasksController < ApplicationController
 
   # Strong Parameters
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :eyecatch)
+    params.require(:task).permit(:title, :content, :deadline, :eyecatch, :priority)
   end
 end
