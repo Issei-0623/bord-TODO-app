@@ -1,0 +1,112 @@
+.auth-title {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  background-color: #f25c5c;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0 0 40px;
+  padding: 0 96px;
+}
+
+.auth-title .global-menu.dropdown {
+  position: absolute !important;
+  top: 30px;
+  right: 80px;
+  transform: none;
+  margin: 0;
+  z-index: 20;
+}
+
+.auth-title .menu-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255,255,255,.18);
+  cursor: pointer;
+}
+.auth-title .menu-btn:hover { background: rgba(255,255,255,.28); }
+
+.auth-title .dropdown-menu {
+  right: 0;
+  top: calc(100% + 8px);
+}
+
+.dropdown {
+  margin-left: auto;
+  position: relative;
+
+  .dropbtn { width: 22px; height: 22px; cursor: pointer; display: block; }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0; top: 26px;
+    min-width: 240px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    padding: 6px 0;
+    z-index: 20;
+
+    a {
+      display: block;
+      padding: 10px 14px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+
+      &:hover { background: rgba(0, 221, 255, 0.3); }
+    }
+  }
+  .dropdown-menu:not(.hidden) { display: block; }
+}
+.hidden { display: none !important; }
+
+.board-head-link, .task-empty-link { text-decoration: none; color: inherit; display: block; }
+
+.task-detail--comment-card .dropdown { position: absolute; top: 8px; right: 8px; }
+.task-detail--comment-card .dropdown .dropdown-menu { position: absolute; right: 0; top: 26px; }
+
+.nickname { font-weight: bold; }
+.timestamp { font-size: 0.8rem; color: gray; margin-left: auto; }
+.task-detail--comment-content { margin-left: 48px; }
+
+.task-detail-actions { position: absolute; top: 12px; right: 16px; }
+.task-detail-actions .dropbtn { width: 30px; height: 30px; cursor: pointer; display: block; }
+
+.board-card .dropdown { position: absolute; top: 8px; right: 12px; }
+.board-card .dropdown .dropbtn { width: 22px; height: 22px; cursor: pointer; display: block; }
+.board-card .dropdown .dropdown-menu { top: 26px; right: 0; }
+.board-card__tasks span { font-size: 16px; font-weight: 600; line-height: 1; }
+
+@media (max-width: 768px) {
+ .auth-title {
+    height: 70px;
+    font-size: 18px;
+    padding: 0 48px;
+  }
+
+  .auth-title__text {
+    font-size: 20px;
+  }
+
+  .auth-title .global-menu.dropdown {
+    top: 20px;
+    right: 16px;
+  }
+
+  .auth-title .menu-btn {
+    width: 36px;
+    height: 36px;
+  }
+}

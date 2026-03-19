@@ -1,0 +1,79 @@
+
+
+.authenticate-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+
+  .cards-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 0 auto;
+    align-items: stretch; /* 各列のカード高さをそろえる */
+  }
+}
+
+.authenticate-card {
+  width: 380px;
+  min-height: 650px;
+  padding: 20px 30px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.authenticate-card:hover {
+  background-color: #d7d7d7;
+  transition: background-color 0.2s ease;
+}
+
+.title-row { display: flex; align-items: center; gap: 8px; }
+.board-head {
+  display: flex; align-items: center; justify-content: space-between;
+  color: #333; font-size: 20px; font-weight: bold; margin: 2px 0 4px;
+}
+.board-label { letter-spacing: .2px; }
+.avatar--sm { width: 24px; height: 24px; }
+.board-title { font-weight: 600; }
+
+
+/* ページ送り */
+.page-arrow {
+  position: fixed;
+  top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #555; border: 1px solid #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: #fff; text-decoration: none;
+  z-index: 50;
+  transition: background-color 0.2s ease;
+}
+.page-arrow--left { left: 16px; }
+.page-arrow--right { right: 16px; }
+.page-arrow:hover { background: #333; }
+
+@media (max-width: 899px) {
+  .authenticate-page .cards-container { flex-direction: column; align-items: center; }
+}
+@media (max-width: 768px) {
+  .authenticate-page .cards-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .authenticate-card {
+    width: 100%;
+    max-width: 95%;
+    min-height: auto;
+    padding: 16px;
+  }
+}

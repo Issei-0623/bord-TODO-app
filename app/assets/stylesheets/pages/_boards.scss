@@ -1,0 +1,35 @@
+.board-index-page {
+  max-width: 1500px; margin: 0 auto; padding: 0 20px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+
+.board-index-actions { display: flex; justify-content: center; gap: 12px; margin-top: 24px; }
+
+.board-form-container { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+.board-form-card {
+  background: #efefef; border: 1px solid #ddd; border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.05); padding: 1.5rem;
+}
+.board-form-card .form-group { margin-bottom: 12px; }
+.board-form-card label { font-weight: bold; display: block; margin-bottom: 4px; }
+.board-form-card .form-control { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: #fff; }
+.board-form-card .form-actions { margin-top: 12px; display: flex; justify-content: center; gap: 12px; }
+.board-form-card .btn { font-size: 16px; border: none; outline: none; box-shadow: none; }
+
+@media (max-width: 768px) {
+  .board-form-container {
+    width: 100%;
+    max-width: 95%;
+    margin: 1.5rem auto 0;
+    padding: 0 12px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .board-form-card {
+    width: 100%;
+    max-width: 360px;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+}

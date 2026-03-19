@@ -1,0 +1,114 @@
+.auth-title-task {
+  position: relative;
+  width: 100%; height: 100px;
+  background-color: #f25c5c; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: bold;
+}
+.authenticate-page-task {
+  display: flex; flex-direction: column; align-items: center; padding: 40px;
+}
+
+.board-show-page {
+  max-width: 1500px; margin: 0 auto; padding: 0 20px;
+  display: flex; flex-direction: column; gap: 32px;
+}
+.board-header {
+  h2 { font-size: 24px; font-weight: bold; margin-bottom: 4px; }
+  .board-description { font-size: 14px; color: #666; }
+}
+
+.board-task-list { display: flex; flex-direction: column; gap: 20px; }
+.board-task-card {
+  background: #efefef; padding: 16px; border: 1px solid #ddd;
+  border-radius: 8px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.board-task-header { display: flex; justify-content: space-between; align-items: center;
+  h4 { font-size: 16px; font-weight: bold; }
+}
+.board-task-actions { a { margin-left: 8px; } }
+.board-task-content { margin: 8px 0; font-size: 14px; }
+.board-task-meta { font-size: 12px; color: #888; }
+.board-task-eyecatch img.board-task-image { margin-top: 8px; max-width: 100%; height: auto; border-radius: 4px; }
+
+/* 投稿フォーム（boards/show 内） */
+.board-task-form {
+  background: #efefef; padding: 16px; border: 1px solid #ddd; border-radius: 8px;
+  width: 100%; max-width: 1200px; margin: 2rem auto; box-sizing: border-box;
+
+  .form-group {
+    margin-bottom: 12px;
+    label { font-weight: bold; display: block; margin-bottom: 4px; }
+    input, textarea {
+      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background: #fff;
+    }
+  }
+  .form-actions { display: flex; justify-content: center; margin-top: 16px; gap: 12px; }
+  .btn-success {
+    background-color: #f25c5c; border-color: #f25c5c;
+    padding: 8px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; color: #ddd;
+    &:hover { background-color: #da3535; }
+  }
+}
+
+.task-detail-container {
+  width: 100%; max-width: 1500px; margin: 2rem auto; padding: 1.5rem;
+  border: 1px solid #ddd; border-radius: 10px; background-color: #efefef;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); position: relative;
+}
+.task-detail-header { position: relative; padding: 12px 44px 0 44px; }
+.task-detail-title { font-size: 1.5rem; font-weight: bold; color: #333; text-align: center; margin: 0; }
+.task-detail-header .dropdown { position: absolute; top: 10px; right: 12px; }
+.task-detail-header .dropdown .dropdown-menu { position: absolute; right: 0; top: 26px; }
+.task-detail-content { margin-top: 1rem; line-height: 1.6; }
+.task-detail-eyecatch { margin-top: 1rem; text-align: center;
+  img.task-eyecatch { max-width: 80%; height: auto; border-radius: 0.5rem; }
+}
+.task-detail-deadline {
+  margin-top: 1rem;
+  .deadline-label { font-weight: bold; margin-right: 0.3rem; }
+}
+.task-detail-meta { display: flex; align-items: center; margin-top: 1rem; gap: 0.5rem; color: #555; }
+
+.task-detail-comments { width: 100%; max-width: 1500px; margin: 2rem auto; padding: 0 1.5rem; }
+.task-detail--comment-card {
+  background: #efefef; border: 1px solid #ddd; border-radius: 8px;
+  padding: 1rem; margin-bottom: 1rem; width: 100%; max-width: 1500px;
+  margin-left: 0; margin-right: 0; position: relative;
+}
+.task-detail--comment-meta {
+  display: flex; align-items: center; gap: .5rem; margin-bottom: .3rem;
+  .avatar { width: 40px; height: 40px; border-radius: 50%; }
+  .nickname { font-weight: 600; }
+  .timestamp { margin-left: auto; font-size: .8rem; color: gray; }
+}
+
+@media (max-width: 768px) {
+  .auth-title-task {
+    font-size: 28px !important;
+  }
+
+  .task-detail-container {
+    width: 90%;
+    margin: 1.5rem auto;
+    padding: 16px;
+  }
+
+
+  /* ===== コメントボタンエリア ===== */
+  .comment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .comment-actions .btn {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    padding: 12px 0;
+  }
+}
