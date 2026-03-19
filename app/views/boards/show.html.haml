@@ -20,7 +20,7 @@
           = link_to task.title, board_task_path(@board, task), class: 'task-title'
 
           -# 操作メニューを表示
-          - if user_signed_in?
+          - if user_signed_in? && task.user == current_user
             .dropdown{ data: { controller: "dropdown" } }
               = image_tag 'actions.svg',
                 class: 'dropbtn',
