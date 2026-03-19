@@ -1,0 +1,68 @@
+.avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+
+.task-list { display: flex; flex-direction: column; gap: 12px; margin-top: 2px; }
+
+.priority-high {
+  background-color: #ffe5e5 !important;  /* 薄い赤 */
+}
+.priority-medium {
+  background-color: #fff8e1 !important;  /* 薄い黄色 */
+}
+.priority-low {
+  background-color: #e8f5e9 !important;  /* 薄い緑 */
+}
+.priority-none {
+  background-color: #efefef !important;  /* デフォルト */
+}
+
+.task-card {
+  background: #efefef;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 12px;
+  position: relative;
+  padding-bottom: 28px; /* コメント表示スペース */
+}
+.task-card__row { display: flex; align-items: center; justify-content: space-between; }
+.task-title { font-weight: 600; text-decoration: none; }
+.task-card__deadline { font-size: 0.85rem; color: #666; margin-top: 2px; }
+.deadline-label { font-weight: bold; margin-right: 2px; }
+.deadline-overdue { color: red; font-weight: bold; }
+.deadline-today { color: orange; font-weight: bold; }
+.task-card__meta { display: flex; align-items: center; gap: 8px; margin-top: 8px; color: #777; font-size: 13px; }
+
+.board-description { margin: 2px 0 6px; font-size: 14px; color: #333; line-height: 1.4; }
+
+.card-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
+
+.task-empty {
+  background: #efefef;
+  border: 1px dashed #e0e0e0;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  color: #777;
+  font-size: 14px;
+
+  .btn-sm { margin-top: 8px; padding: 6px 10px; font-size: 13px; }
+}
+
+.task-card__comments {
+  position: absolute; right: 12px; bottom: 10px;
+  display: flex; align-items: center; gap: 4px;
+  color: #777; font-size: 18px;
+}
+.task-card__comments.is-zero { display: none; }
+
+.board-card { background: #efefef; border: 1px solid #e5e5e5; border-radius: 12px; padding: 16px; position: relative; }
+.board-card__head { position: relative; display: flex; align-items: center; justify-content: space-between; }
+.board-link { font-weight: 600; text-decoration: none; color: inherit; }
+.board-card__description { margin: 8px 0; font-size: 14px; color: #333; line-height: 1.4; }
+.board-card__meta { display: flex; align-items: center; gap: 8px; color: #777; font-size: 13px; }
+.board-card__tasks { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 18px; color: #777; }
+.board-card__tasks.is-zero { display: none; }

@@ -1,0 +1,25 @@
+.btn-success { border: none; outline: none; }
+form .field { display: flex; flex-direction: column; margin-bottom: 1rem; }
+.comment-form-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+.comment-form { width: 100%; max-width: 1200px; }
+.comment-form textarea.form-control { width: 100% !important; min-height: 140px; }
+.comment-form .form-actions .btn { font-size: 16px; border: none; outline: none; box-shadow: none; }
+.btn-primary, .btn-success { border: none; outline: none; box-shadow: none; }
+
+@media (max-width: 768px) {
+  .board-form-card .form-actions,
+  .comment-form .form-actions,
+  .profile-form-card .form-actions {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .board-form-card .btn,
+  .comment-form .btn,
+  .profile-form-card .btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 12px 0;
+  }
+}

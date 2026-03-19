@@ -1,0 +1,26 @@
+// Devise（ログイン/登録など）
+.auth-page { max-width: 1200px; margin: 0 auto; padding: 0 24px 40px; }
+.auth-hero {
+  background: #f25c5c; color: #fff; text-align: center;
+  font-weight: 700; font-size: 24px; line-height: 1;
+  padding: 18px 12px; border-radius: 6px; margin: 16px 0 28px;
+}
+.auth-center { display: flex; justify-content: center; }
+.auth-card { background: #f3f3f3; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.05); padding: 28px 32px; }
+.auth-card--wide { width: 100%; max-width: 720px; }
+
+.field { display: grid; gap: 8px; margin: 14px 0; }
+.field.inline { display: flex; align-items: center; gap: 8px; }
+.input-label { font-size: 14px; color: #444; }
+.input-box { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 6px; background: #fff; }
+.actions { margin-top: 18px; display: flex; justify-content: center; gap: 12px; }
+
+.submit-button {
+  width: 100%; padding: 12px 14px; border-radius: 8px;
+  background: #f25c5c; color: #fff; font-weight: 700; border: none; outline: none; box-shadow: none;
+  &:hover { background: #da3535; }
+}
+.btn-primary, .btn-success { border: none; outline: none; box-shadow: none; }
+
+.devise-links { margin-top: 10px; display: flex; gap: 16px; flex-wrap: wrap; }
+
