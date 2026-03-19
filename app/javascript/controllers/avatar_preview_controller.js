@@ -1,6 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
 
-// data-controller="avatar-preview" で使用
 export default class extends Controller {
   static targets = ["input"]
 
