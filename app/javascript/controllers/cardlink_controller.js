@@ -1,10 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
 
-/*
-  カード全体をクリック可能にしつつ、
-  cardlink_ignore が付いた要素や a / button などは除外する。
-  Enter/Space でも遷移できるようにする（アクセシビリティ）。
-*/
 export default class extends Controller {
   static values = { url: String }
 

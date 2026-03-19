@@ -2,7 +2,7 @@
   .auth-title
     %h1.auth-title__text Board Todo App
 
-    -# ドロップダウンメニュー（ボード一覧、プロフィール、ログイン/ログアウト）
+    -# ドロップダウンメニュー
     .global-menu.dropdown{ data: { controller: "dropdown" } }
       = image_tag "menu.svg",
         class: "menu-btn",
@@ -19,9 +19,7 @@
           = link_to 'ログイン / 新規ユーザー登録', new_user_session_path, class: 'btn'
 
   .cards-container
-    -# 最新のボードを繰り返し表示
     - @latest_boards.each do |board|
-      -# カード全体をクリック可能にする（Stimulus Controller: cardlink）
       .authenticate-card{
         data: {
           controller: "cardlink",
