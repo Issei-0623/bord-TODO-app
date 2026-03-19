@@ -1,7 +1,7 @@
 class BoardsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :set_board,    only: [:edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     per_page = params[:per_page].presence&.to_i

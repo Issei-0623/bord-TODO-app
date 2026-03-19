@@ -6,8 +6,7 @@
     .task-detail-header
       %h2.task-detail-title= @task.title
 
-      -# タスク投稿者本人なら編集・削除可能
-      - if user_signed_in?
+      - if user_signed_in? && @task.user == current_user
         .dropdown{ data: { controller: "dropdown" } }
           = image_tag 'actions.svg',
             class: 'dropbtn',
@@ -50,7 +49,6 @@
           %span.nickname= comment.user.profile&.nickname.presence || comment.user.email.split('@').first
           %div.timestamp= l(comment.created_at, format: :short)
 
-          -# コメント投稿者自身なら編集・削除が可能
           - if user_signed_in? && comment.user == current_user
             .dropdown{ data: { controller: "dropdown" } }
               = image_tag 'actions.svg',

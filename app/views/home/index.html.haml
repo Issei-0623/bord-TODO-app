@@ -23,7 +23,7 @@
       .authenticate-card{
         data: {
           controller: "cardlink",
-          cardlink_url_value: board_path(board),
+          cardlink_url_value: (user_signed_in? ? board_path(board) : new_user_session_path),
           action: "click->cardlink#go keydown->cardlink#key"
         },
         role: "link",
@@ -31,7 +31,7 @@
       }
 
         -# ボード見出し（タイトル + ユーザーアバター）
-        = link_to board_path(board), class: 'board-head-link', data: { cardlink_ignore: true } do
+        = link_to (user_signed_in? ? board_path(board) : new_user_session_path), class: 'board-head-link', data: { cardlink_ignore: true } do
           .board-head
             %span.board-label= board.title
             = image_tag board.user.avatar_url,
@@ -45,7 +45,7 @@
 
         .task-list
           - if board.tasks.empty?
-            = link_to board_path(board), class: 'task-empty-link', data: { cardlink_ignore: true } do
+            = link_to (user_signed_in? ? board_path(board) : new_user_session_path), class: 'task-empty-link', data: { cardlink_ignore: true } do
               .task-empty
                 %p まだタスクがありません
           - else
@@ -59,7 +59,7 @@
                     = link_to task.title, new_user_session_path, class: 'task-title'
 
                   -# 編集・削除ボタンを表示
-                  - if user_signed_in?
+                  - if user_signed_in? && task.user == current_user
                     .dropdown{ data: { controller: "dropdown" } }
                       = image_tag 'actions.svg',
                         class: 'dropbtn',

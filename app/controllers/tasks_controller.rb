@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_board
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_owner!, only: [:edit, :update]
+  before_action :authorize_owner!, only: [:edit, :update, :destroy]
 
   def create
     @task = @board.tasks.build(task_params)

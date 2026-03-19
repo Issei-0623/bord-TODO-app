@@ -9,7 +9,7 @@
  * Consider organizing styles into separate files for maintainability.
  */
 // app/assets/stylesheets/application.scss
-// @import "base/body";
+@import "based/body";
 
 @import "shared/layout";
 @import "shared/buttons";
