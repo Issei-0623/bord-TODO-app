@@ -13,7 +13,7 @@
           = link_to board.title, board_path(board), class: 'board-link'
 
         -# ▼ 三点メニューを出す
-        - if user_signed_in?
+        - if user_signed_in? && board.user == current_user
           .dropdown{ data: { controller: "dropdown" } }
             = image_tag 'actions.svg',
               class: 'dropbtn',
