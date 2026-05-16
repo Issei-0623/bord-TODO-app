@@ -61,6 +61,8 @@ group :development, :test do
   gem "pry-stack_explorer"
   gem "rubocop-rails"
   gem "dotenv-rails"
+  gem "rspec-rails"
+  gem "factory_bot_rails"
 
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
@@ -80,4 +82,5 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "shoulda-matchers"
 end
