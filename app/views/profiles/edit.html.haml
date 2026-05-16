@@ -2,25 +2,21 @@
   .auth-title-task
     プロフィール編集
 
--# フォーム全体を囲むコンテナ
 .board-form-container
   .board-form-card{ data: { controller: 'avatar-preview' } }
 
-    -# バリデーションエラーがある場合はアラート表示
     - if @profile.errors.any?
       .alert.alert-danger
         - @profile.errors.full_messages.each do |msg|
           %div= msg
 
-    -# 現在のアバター画像を表示
     .current-avatar
       %label 現在のアバター画像
-      = image_tag @profile.avatar_url,
+      = image_tag profile_avatar_url(@profile),
                   class: 'profile-avatar preview-target',
                   alt: '現在のアバター',
                   loading: 'lazy'
 
-    -# プロフィール編集用のフォーム
     = form_with model: @profile, url: profile_path, method: :put, local: true do |f|
       .form-group
         = f.label :avatar, '新しいアバター画像'

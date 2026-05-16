@@ -1,0 +1,11 @@
+.dropdown{ data: { controller: "dropdown" } }
+  = image_tag 'actions.svg',
+    class: 'dropbtn',
+    alt: 'Actions',
+    data: { action: "click->dropdown#toggle", cardlink_ignore: true }
+  .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
+    = link_to '編集', edit_path, data: { cardlink_ignore: true }
+    = link_to '削除', delete_path,
+      method: :delete,
+      data: { turbo_confirm: (local_assigns[:confirm_message] || '本当に削除してもよろしいですか？'),
+              cardlink_ignore: true }
