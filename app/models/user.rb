@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   delegate :birthday, :age, :gender, :introduction, to: :profile, allow_nil: true
 
   has_many :boards, dependent: :destroy
@@ -21,15 +19,7 @@ class User < ApplicationRecord
   end
 
   def display_name
-    profile&.nickname || self.email.split('@').first
-  end
-
-  def avatar_image
-    if profile&.avatar&.attached?
-      profile.avatar
-    else
-      'default-avatar.png'
-    end
+    profile&.nickname.presence || email.split('@').first
   end
 
   def avatar_url(size: [28, 28])

@@ -1,26 +1,14 @@
 class BoardsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create edit update destroy]
-  before_action :set_board,    only: [:edit, :update, :destroy]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :set_board,      only: [:show, :edit, :update, :destroy]
+  before_action :authorize_owner!, only: [:edit, :update, :destroy]
 
   def index
-    per_page = params[:per_page].presence&.to_i
-    per_page = Board.count if per_page.nil? || per_page <= 0
-
-    @page = params[:page].to_i
-    @page = 1 if @page < 1
-
     @boards = Board
       .includes(
         user: { avatar_attachment: :blob },
         tasks: [:user, { comments: :user }]
       )
       .order(created_at: :desc)
-      .offset((@page - 1) * per_page)
-      .limit(per_page)
-
-    @total_pages = (Board.count / per_page.to_f).ceil
-    @per_page    = per_page
   end
 
   def new
@@ -48,8 +36,7 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @board = Board.find(params[:id])
-    @tasks = @board.tasks.includes(:user).order(Arel.sql("CASE WHEN deadline IS NULL THEN 1 ELSE 0 END, deadline ASC"))
+    @tasks = @board.tasks.includes(:user).ordered_by_deadline
     @task  = Task.new
   end
 
@@ -59,6 +46,7 @@ class BoardsController < ApplicationController
   end
 
   private
+
   def board_params
     params.require(:board).permit(:title, :content)
   end
@@ -67,7 +55,7 @@ class BoardsController < ApplicationController
     @board = Board.find(params[:id])
   end
 
-  def correct_user
+  def authorize_owner!
     redirect_to root_path, alert: '権限がありません' unless @board.user == current_user
   end
 end

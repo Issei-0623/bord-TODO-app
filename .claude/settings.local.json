@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bin/dev)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill -9)",
+      "WebFetch(domain:sheer-dugong-249.notion.site)"
+    ]
+  }
+}

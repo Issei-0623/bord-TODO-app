@@ -1,13 +1,8 @@
 class HomeController < ApplicationController
   def index
-    per_page = params[:per_page].presence&.to_i || 5
-    per_page = 5 if per_page <= 0
+    setup_pagination(default_per_page: 5)
 
-    # ページ番号（1始まり）
-    @page = params[:page].to_i
-    @page = 1 if @page < 1
-
-    @latest_boards =
+    @latest_boards = paginate(
       Board
         .includes(
           user:  [ avatar_attachment: :blob ],
@@ -19,10 +14,6 @@ class HomeController < ApplicationController
           ]
         )
         .order(created_at: :desc)
-        .offset((@page - 1) * per_page)
-        .limit(per_page)
-
-    @total_pages = (Board.count / per_page.to_f).ceil
-    @per_page    = per_page
+    )
   end
 end

@@ -6,18 +6,10 @@
     .task-detail-header
       %h2.task-detail-title= @task.title
 
-      - if user_signed_in? && @task.user == current_user
-        .dropdown{ data: { controller: "dropdown" } }
-          = image_tag 'actions.svg',
-            class: 'dropbtn',
-            alt: 'Actions',
-            data: { action: "click->dropdown#toggle", cardlink_ignore: true }
-          .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
-            = link_to '編集',  edit_board_task_path(@board, @task), data: { cardlink_ignore: true }
-            = link_to '削除',
-              board_task_path(@board, @task),
-              method: :delete,
-              data: { turbo_confirm: '本当に削除してもよろしいですか？', cardlink_ignore: true }
+      - if @task.user == current_user
+        = render 'shared/dropdown_menu',
+            edit_path: edit_board_task_path(@board, @task),
+            delete_path: board_task_path(@board, @task)
 
     .task-detail-content
       = simple_format(@task.content)
@@ -27,16 +19,11 @@
         = image_tag url_for(@task.eyecatch), class: 'task-eyecatch'
 
     .task-detail-deadline
-      - if @task.deadline.present?
-        %span.deadline-label 期限:
-        %span= l(@task.deadline, format: :long)
-      - else
-        %span.deadline-label 期限:
-        %span 未設定
+      = deadline_display(@task.deadline)
 
     .task-detail-meta
       = image_tag @task.user.avatar_url, class: 'avatar avatar--sm', alt: 'Task owner'
-      %span= @task.user.profile&.nickname.presence || @task.user.email.split('@').first
+      %span= @task.user.display_name
 
   .task-detail-comments
   %h3 コメント一覧
@@ -46,21 +33,14 @@
       .task-detail--comment-card
         .task-detail--comment-meta
           = image_tag comment.user.avatar_url, class: 'avatar avatar--sm', alt: 'Comment user'
-          %span.nickname= comment.user.profile&.nickname.presence || comment.user.email.split('@').first
+          %span.nickname= comment.user.display_name
           %div.timestamp= l(comment.created_at, format: :short)
 
-          - if user_signed_in? && comment.user == current_user
-            .dropdown{ data: { controller: "dropdown" } }
-              = image_tag 'actions.svg',
-                class: 'dropbtn',
-                alt: 'Actions',
-                data: { action: "click->dropdown#toggle", cardlink_ignore: true }
-              .dropdown-menu.hidden{ data: { dropdown_target: "menu" } }
-                = link_to '編集',  edit_task_comment_path(@task, comment), data: { cardlink_ignore: true }
-                = link_to '削除',
-                  task_comment_path(@task, comment),
-                  method: :delete,
-                  data: { turbo_confirm: '本当に削除しますか？', cardlink_ignore: true }
+          - if comment.user == current_user
+            = render 'shared/dropdown_menu',
+                edit_path: edit_task_comment_path(@task, comment),
+                delete_path: task_comment_path(@task, comment),
+                confirm_message: '本当に削除しますか？'
 
         .task-detail--comment-content
           = simple_format(comment.content)
