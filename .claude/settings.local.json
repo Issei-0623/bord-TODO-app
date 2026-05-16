@@ -10,7 +10,9 @@
       "Bash(bundle exec *)",
       "Bash(RUBYOPT=\"-EUTF-8\" bundle exec rspec spec/models --format documentation)",
       "Bash(RUBYOPT=\"-EUTF-8\" bundle exec rspec spec/requests --format documentation)",
-      "Bash(RUBYOPT=\"-EUTF-8\" bundle exec rspec spec/models spec/requests)"
+      "Bash(RUBYOPT=\"-EUTF-8\" bundle exec rspec spec/models spec/requests)",
+      "Bash(RUBYOPT=\"-EUTF-8\" bundle exec rspec spec/system --format documentation)",
+      "Bash(RUBYOPT=\"-EUTF-8\" bundle exec rspec spec/models spec/requests spec/system)"
     ]
   }
 }
