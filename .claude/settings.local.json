@@ -4,7 +4,11 @@
       "Bash(bin/dev)",
       "Bash(lsof -ti:3000)",
       "Bash(xargs kill -9)",
-      "WebFetch(domain:sheer-dugong-249.notion.site)"
+      "WebFetch(domain:sheer-dugong-249.notion.site)",
+      "Bash(bundle install *)",
+      "Bash(bin/rails generate *)",
+      "Bash(bundle exec *)",
+      "Bash(RUBYOPT=\"-EUTF-8\" bundle exec rspec spec/models --format documentation)"
     ]
   }
 }
